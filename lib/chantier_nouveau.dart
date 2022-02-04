@@ -180,7 +180,6 @@ class _NouveauChantierState extends State<NouveauChantier> {
                       -1,
                       nameController.text,
                       adresseController.text,
-                      designationController.text,
                       descriptionController.text,
                       materiaux.map((e) => e.id.toString()).join("_"),
                       travaux.map((e) => e.id.toString()).join("_"),
@@ -243,13 +242,7 @@ class _NouveauChantierState extends State<NouveauChantier> {
                 labelText: 'Adresse Chantier',
               ),
             ),
-            TextField(
-              controller: designationController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Designation Chantier',
-              ),
-            ),
+
             TextField(
               controller: descriptionController,
               decoration: InputDecoration(

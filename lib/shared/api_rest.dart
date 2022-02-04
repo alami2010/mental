@@ -1,14 +1,17 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io' as io;
 
 import 'package:dio/dio.dart' as dio;
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:mental/constants/constants.dart';
 import 'package:mental/model/chantier.dart';
+import 'package:mental/model/data.dart';
 import 'package:path/path.dart';
 
-const baseUrl = "https://alamio.fr/3h_metal/public/api/";
-//const baseUrl = "http://127.0.0.1:8000/api/";
+const baseUrl = baseUrlMental + "api/";
+//const baseUrl = baseUrlMental + "/api/";
 
 class APIRest {
   static Future getClients() {
@@ -77,7 +80,6 @@ class APIRest {
       var formData = dio.FormData.fromMap({
         "name": chantier.name,
         "adresse": chantier.adresse,
-        "designation": chantier.designation,
         "description": chantier.description,
         "travaux": chantier.travaux,
         "materiaux": chantier.materiaux,
@@ -102,17 +104,15 @@ class APIRest {
     //---Create http package multipart request object
     final request = http.MultipartRequest(
       "POST",
-      Uri.parse("https://alamio.fr/3h_metal/public/api/nv-chantier"),
+      Uri.parse(baseUrl + 'nv-chantier'),
     );
     //-----add other fields if needed
-    request.fields["name"] =chantier.name;
-    request.fields["adresse"] =chantier.adresse;
-    request.fields["designation"] =chantier.designation;
-    request.fields["description"] =chantier.description;
-    request.fields["travaux"] =chantier.travaux;
-    request.fields["materiaux"] =chantier.materiaux;
-    request.fields["client"] =chantier.client!;
-
+    request.fields["name"] = chantier.name;
+    request.fields["adresse"] = chantier.adresse;
+    request.fields["description"] = chantier.description;
+    request.fields["travaux"] = chantier.travaux;
+    request.fields["materiaux"] = chantier.materiaux;
+    request.fields["client"] = chantier.client!;
 
     if (!files.isEmpty) {
       files.forEach((element) async {
@@ -134,10 +134,60 @@ class APIRest {
     print("upload finish");
   }
 
-
-  static Future chantiers() {
+  static Future chantiersNewAndStartStatus() {
     var url = baseUrl + "chantier";
     showUrl(url);
     return http.get(Uri.parse(url));
+  }
+
+  static Future chantiersStartStatus() {
+    var url = baseUrl + "chantier-start";
+    showUrl(url);
+    return http.get(Uri.parse(url));
+  }
+
+  static Future chantiersDoneStatus() {
+    var url = baseUrl + "chantier-done";
+    showUrl(url);
+    return http.get(Uri.parse(url));
+  }
+
+  static Future changeChantierStatus(int id, String status) {
+    return http.post(
+      Uri.parse(baseUrl + 'change-chantier-status'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'id': id.toString(),
+        'status': status,
+      }),
+    );
+  }
+
+  static Future saveProgress(List<Data> listTravaux, int id) {
+    List jsonList = [];
+    listTravaux.map((item) => jsonList.add(item.toJson())).toList();
+    return http.post(Uri.parse(baseUrl + 'change-chantier-process'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'id': id.toString(),
+          'travaux': jsonEncode(jsonList),
+        }));
+  }
+
+  static saveTravauxSupp(String supp, int id) {
+    return http.post(
+      Uri.parse(baseUrl + 'change-chantier-supp'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'id': id.toString(),
+        'supp': supp,
+      }),
+    );
   }
 }

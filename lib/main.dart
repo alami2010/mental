@@ -1,15 +1,8 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:mental/chantier_en_cours.dart';
-import 'package:mental/components/list_task_assigned.dart';
-import 'package:mental/list_materiaux.dart';
-import 'package:mental/list_travaux.dart';
-import 'package:mental/page_vide.dart';
-import 'package:mental/home.dart';
 
-import 'constants/assets_path.dart';
-import 'list_client.dart';
-import 'chantier_nouveau.dart';
+import 'MenuAdmin.dart';
+import 'user/MenuUser.dart';
+import 'constants/constants.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +27,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
+        fontFamily: Font.nunito,
         primarySwatch: Colors.blue,
       ),
       home: const HomePage(),
@@ -41,87 +35,91 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class AdminMenu extends StatefulWidget {
-  const AdminMenu({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<AdminMenu> createState() => _AdminMenuState();
+  HomePageState createState() {
+    return HomePageState();
+  }
 }
 
-class _AdminMenuState extends State<AdminMenu> {
-  final weeklyTask = [
-    const ListTaskAssignedData(
-        icon: Icon(EvaIcons.home, color: Colors.blue),
-        label: "Liste Travaux",
-        page: ListTravaux()),
-    ListTaskAssignedData(
-      icon: const Icon(EvaIcons.homeOutline, color: Colors.blue),
-      label: "Liste matériaux",
-      page: ListMateriaux(),
-    ),
-    const ListTaskAssignedData(
-      icon: Icon(EvaIcons.people, color: Colors.blue),
-      label: "Liste clients",
-      page: ListClient(),
-    ),
-    const ListTaskAssignedData(
-      icon: Icon(EvaIcons.plusCircle, color: Colors.blue),
-      label: "Nouveau chantier",
-      page: NouveauChantier(),
-    ),
-    const ListTaskAssignedData(
-      icon: Icon(EvaIcons.pieChart, color: Colors.blue),
-      label: "Chantier en cours",
-      page: ChantierEnCours(),
-    ),
-    const ListTaskAssignedData(
-      icon: Icon(EvaIcons.alertCircle, color: Colors.blue),
-      label: "Matérieux manquants",
-      page: PageEmpty(),
-    ),
-    const ListTaskAssignedData(
-      icon: Icon(EvaIcons.archive, color: Colors.blue),
-      label: "Chantiers archivés",
-      page: PageEmpty(),
-    ),
-  ];
+// Create a corresponding State class.
+// This class holds data related to the form.
+class HomePageState extends State<HomePage> {
+  late String password;
+
+  // Create a global key that uniquely identifies the Form widget
+  // and allows validation of the form.
+  //
+  // Note: This is a GlobalKey<FormState>,
+  // not a GlobalKey<MyCustomFormState>.
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    // Build a Form widget using the _formKey created above.
     return Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
               const SizedBox(height: 50),
               Container(height: 150, child: Image.asset(ImageRasterPath.logo)),
               const SizedBox(height: 50),
-              ...weeklyTask
-                  .asMap()
-                  .entries
-                  .map((e) => ListTaskAssigned(
-                        data: e.value,
-                      ))
-                  .toList(),
+              Text(
+                "Entrez votre code",
+                style: TextStyle(fontSize: 20),
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      // The validator receives the text that the user has entered.
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Veuillez saisir du texte';
+                        }
+                        setState(() {
+                          password = value;
+                        });
+                        return null;
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Validate returns true if the form is valid, or false otherwise.
+                          if (_formKey.currentState!.validate()) {
+                            print(password);
 
+                            FocusScope.of(context).requestFocus(FocusNode());
+
+                            if (password == "01") {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => MenuAdmin()));
+                            } else if (password == "02") {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => UserMenu()));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Code incorrect')),
+                              );
+                            }
+                          }
+                        },
+                        child: const Text('Valider'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

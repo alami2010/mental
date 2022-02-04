@@ -44,6 +44,7 @@ dependencies:
   file: ^6.1.2
   flutter_downloader: ^1.7.2
   url_launcher: ^6.0.18
+  percent_indicator: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,12 @@ flutter:
   assets:
     - assets/images/raster/.
 
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/nunito/Nunito-Regular.ttf
+        - asset: assets/fonts/nunito/Nunito-Italic.ttf
+          style: italic
 
   # To add assets to your application, add an assets section, like this:
   # assets:

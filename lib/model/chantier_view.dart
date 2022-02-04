@@ -1,17 +1,21 @@
+import 'dart:ui';
+
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:flutter/material.dart';
+import 'package:mental/model/data.dart';
 import 'package:mental/model/plan.dart';
 
 class ChantierView {
   // field
-  int? id;
+  int id;
   String name;
   String adresse;
-  String designation;
   String description;
   String status;
+  String supp;
   String materiaux;
-  String travaux;
   String client;
-  List<String> listTravaux;
+  List<Data> listTravaux;
   List<String> listMateriaux;
   List<Plan> listPlans;
 
@@ -19,11 +23,10 @@ class ChantierView {
       this.id,
       this.name,
       this.adresse,
-      this.designation,
       this.description,
       this.status,
+      this.supp,
       this.materiaux,
-      this.travaux,
       this.client,
       this.listTravaux,
       this.listMateriaux,
@@ -34,14 +37,31 @@ class ChantierView {
         json['id'],
         json['name'],
         json['adresse'],
-        json['designation'],
         json['description'],
         json['status'],
+        json['supp'] == null ? "" : json['supp'],
         json['materiaux'],
-        json['travaux'],
         json['client'],
-        json['listTravaux'].cast<String>(),
+        List<Data>.from(json["listTravaux"].map((x) => Data.fromJson(x))),
         json['listMateriaux'].cast<String>(),
         List<Plan>.from(json["listPlans"].map((x) => Plan.fromJson(x))));
+  }
+
+  Color getStatusColor() {
+    if (status == 'NEW') return Color(0xffFEA741);
+    if (status == 'START') return Color(0xff31DFB5);
+    return Color(0xffB5C8E7);
+  }
+
+  String getStatusName() {
+    if (status == 'NEW') return "Nouveau";
+    if (status == 'START') return "En cours";
+    return "Archivé";
+  }
+
+  Icon getStatusIcon() {
+    if (status == 'NEW') return Icon(EvaIcons.award);
+    if (status == 'START') return Icon(EvaIcons.activityOutline);
+    return Icon(EvaIcons.lock);
   }
 }

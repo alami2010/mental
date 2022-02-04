@@ -1,18 +1,21 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:mental/model/chantier_view.dart';
+import 'package:mental/shared/tools.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ChantierDetails extends StatefulWidget {
+import 'constants/constants.dart';
+
+class ChantierDetailsAdmin extends StatefulWidget {
   final ChantierView chantier;
 
-  const ChantierDetails({required this.chantier}) : super();
+  const ChantierDetailsAdmin({required this.chantier}) : super();
 
   @override
-  State<ChantierDetails> createState() => _ChantierDetailsState();
+  State<ChantierDetailsAdmin> createState() => _ChantierDetailsAdminState();
 }
 
-class _ChantierDetailsState extends State<ChantierDetails> {
+class _ChantierDetailsAdminState extends State<ChantierDetailsAdmin> {
   @override
   void initState() {
     super.initState();
@@ -38,17 +41,10 @@ class _ChantierDetailsState extends State<ChantierDetails> {
               elevation: 5,
               child: ListTile(
                 onTap: () {
-                  launchMap(widget.chantier.adresse);
+                  Tools.launchMap(widget.chantier.adresse);
                 },
                 leading: Icon(EvaIcons.pinOutline),
                 title: Text(widget.chantier.adresse),
-              ),
-            ),
-            Card(
-              elevation: 5,
-              child: ListTile(
-                leading: Icon(EvaIcons.layers),
-                title: Text(widget.chantier.designation),
               ),
             ),
             Card(
@@ -74,7 +70,7 @@ class _ChantierDetailsState extends State<ChantierDetails> {
                     return Container(
                       decoration:
                           BoxDecoration(color: Colors.grey.withOpacity(0.8)),
-                      child: ListTile(title: Text(item)),
+                      child: ListTile(title: Text(item.name)),
                     ); // you can add your available item here
                   },
                   childCount: widget.chantier.listTravaux.length,
@@ -121,9 +117,7 @@ class _ChantierDetailsState extends State<ChantierDetails> {
                       child: ListTile(
                         title: Text(item.name),
                         onTap: () {
-                          downloadFile(
-                              "https://alamio.fr/3h_metal/public/files/" +
-                                  item.url);
+                          Tools.open(baseUrlMental + "/public/files/" + item.url);
                         },
                       ),
                     ); // you can add your available item here
@@ -134,23 +128,5 @@ class _ChantierDetailsState extends State<ChantierDetails> {
             ]))
           ]),
         ));
-  }
-
-  Future<void> downloadFile(String url) async {
-    print(url);
-    if (await canLaunch(url))
-      await launch(url);
-    else
-      // can't launch url, there is some error
-      throw "Could not launch $url";
-  }
-
-  void launchMap(String address) async {
-    String query = Uri.encodeComponent(address);
-    String googleUrl = "https://www.google.com/maps/search/?api=1&query=$query";
-
-    if (await canLaunch(googleUrl)) {
-      await launch(googleUrl);
-    }
   }
 }
