@@ -6,6 +6,8 @@ import 'package:mental/model/chantier_view.dart';
 import 'package:mental/shared/api_rest.dart';
 import 'package:mental/travaux_supplementaire_admin.dart';
 
+import 'hour_work_admin.dart';
+
 class ChantierActionAdmin extends StatefulWidget {
   final ChantierView chantier;
 
@@ -80,6 +82,11 @@ class _ChantierActionAdminState extends State<ChantierActionAdmin> {
             Card(
               elevation: 5,
               child: ListTile(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          HourWorkAdmin(chantier: widget.chantier)));
+                },
                 leading: Icon(EvaIcons.clock),
                 title: Text('Temps de travail'),
               ),

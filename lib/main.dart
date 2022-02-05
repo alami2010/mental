@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'MenuAdmin.dart';
-import 'user/MenuUser.dart';
+import 'user/menu_user.dart';
 import 'constants/constants.dart';
 
 void main() {

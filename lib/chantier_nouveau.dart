@@ -65,70 +65,58 @@ class _NouveauChantierState extends State<NouveauChantier> {
     getData();
   }
 
-  void _showMultiSelect(dynamic value, BuildContext context) async {
-    switch (value) {
-      case 0:
-        {
-          final List<Data>? results = await showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return MultiSelect(
-                items: allTravaux,
-                selectedItems: travaux,
-                title: "Selectionnez les travaux",
-              );
-            },
-          );
 
-          print(results);
-          if (results != null) {
-            setState(() {
-              travaux = results;
-            });
-          }
-        }
-        break;
-      case 1:
-        {
-          final List<Data>? results = await showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return MultiSelect(
-                items: allMateriaux,
-                selectedItems: materiaux,
-                title: "Selectionnez les materiaux",
-              );
-            },
-          );
+  Future<void> getMateriaux(BuildContext context) async {
+    final List<Data>? results = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return MultiSelect(
+          items: allMateriaux,
+          selectedItems: materiaux,
+          title: "Selectionnez les materiaux",
+        );
+      },
+    );
 
-          print(results);
-          if (results != null) {
-            setState(() {
-              materiaux = results;
-            });
-          }
-        }
-        break;
-      case 2:
-        {
-          getFile();
-        }
-        break;
+    print(results);
+    if (results != null) {
+      setState(() {
+        materiaux = results;
+      });
+    }
+  }
+
+  Future<void> getTravaux(BuildContext context) async {
+    final List<Data>? results = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return MultiSelect(
+          items: allTravaux,
+          selectedItems: travaux,
+          title: "Selectionnez les travaux",
+        );
+      },
+    );
+
+    print(results);
+    if (results != null) {
+      setState(() {
+        travaux = results;
+      });
     }
   }
 
 
   Future getFile() async {
     FilePickerResult? result =
-        await FilePicker.platform.pickFiles(allowMultiple: true);
+    await FilePicker.platform.pickFiles(allowMultiple: true);
 
     if (result != null) {
       setState(() {
         platformFiles.addAll(result.files);
       });
 
-      if (kIsWeb) {
-      } else {
+      if (kIsWeb) {} else {
         setState(() {
           files = result.paths.map((path) => io.File(path!)).toList();
           print(files);
@@ -146,27 +134,6 @@ class _NouveauChantierState extends State<NouveauChantier> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Nouveau Chantier'),
-          actions: [
-            PopupMenuButton(
-              icon: Icon(Icons.more_vert),
-              onSelected: (value) {
-                _showMultiSelect(value, context);
-              },
-              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                const PopupMenuDivider(),
-                const PopupMenuItem(
-                  child: Text('Ajouter un plan'),
-                  value: 2,
-                ),
-                const PopupMenuItem(
-                  child: Text('Ajouter un materiaux'),
-                  value: 1,
-                ),
-                const PopupMenuItem(
-                    child: Text('Ajouter un travail'), value: 0),
-              ],
-            ),
-          ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Container(
@@ -252,10 +219,14 @@ class _NouveauChantierState extends State<NouveauChantier> {
             ),
             Expanded(
                 child: CustomScrollView(slivers: <Widget>[
-                  const SliverToBoxAdapter(
+                  SliverToBoxAdapter(
                     child: ListTile(
+                      onTap: () {
+                      getTravaux(context);
+                    },
                       leading: Icon(EvaIcons.homeOutline),
                       title: Text('Travaux'),
+                      trailing: Icon(EvaIcons.gridOutline),
                     ),
                   ),
                   SliverList(
@@ -271,16 +242,20 @@ class _NouveauChantierState extends State<NouveauChantier> {
                       childCount: travaux.length,
                     ),
                   ),
-                  const SliverToBoxAdapter(
+                   SliverToBoxAdapter(
                     child: ListTile(
+                      onTap: () {
+                        getMateriaux(context);
+                      },
                       leading: Icon(EvaIcons.home),
                       title: Text('Materiaux'),
+                      trailing: Icon(EvaIcons.gridOutline),
                     ),
                   ),
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                            final item = materiaux[index];
+                        final item = materiaux[index];
                         if (index > materiaux.length) return null;
                         return Container(
                           margin: const EdgeInsets.all(2.0),
@@ -292,16 +267,19 @@ class _NouveauChantierState extends State<NouveauChantier> {
                       childCount: materiaux.length,
                     ),
                   ),
-                  const SliverToBoxAdapter(
+                   SliverToBoxAdapter(
                     child: ListTile(
+                      onTap: () {
+                        getFile();                     },
                       leading: Icon(EvaIcons.file),
                       title: Text('Plan'),
+                      trailing: Icon(EvaIcons.gridOutline),
                     ),
                   ),
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                         final item = platformFiles[index];
+                        final item = platformFiles[index];
                         if (index > platformFiles.length) return null;
                         return Container(
                           margin: const EdgeInsets.all(2.0),
@@ -329,42 +307,4 @@ class _NouveauChantierState extends State<NouveauChantier> {
     }
   }
 
-  Widget _tabSection(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Column(
-        children: <Widget>[
-          Container(
-            child: TabBar(labelColor: Colors.black, tabs: [
-              Tab(
-                text: "Travaux",
-                icon: Icon(EvaIcons.gridOutline),
-              ),
-              Tab(
-                text: "Materiaux",
-                icon: Icon(EvaIcons.layers),
-              ),
-              Tab(
-                text: "Plans",
-                icon: Icon(EvaIcons.file),
-              ),
-            ]),
-          ),
-          Container(
-            //Add this to give height
-            height: 300,
-            child: TabBarView(children: [
-              Container(
-                child: Tools.getListViewData(travaux),
-              ),
-              Container(
-                child: Tools.getListViewData(materiaux),
-              ),
-              Container(child: Tools.getListViewFiles(platformFiles)),
-            ]),
-          ),
-        ],
-      ),
-    );
-  }
 }

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:mental/model/data.dart';
+import 'package:mental/model/horaire.dart';
 import 'package:mental/model/plan.dart';
 
 class ChantierView {
@@ -18,6 +19,7 @@ class ChantierView {
   List<Data> listTravaux;
   List<String> listMateriaux;
   List<Plan> listPlans;
+  List<Horaire> horaires;
 
   ChantierView(
       this.id,
@@ -30,7 +32,8 @@ class ChantierView {
       this.client,
       this.listTravaux,
       this.listMateriaux,
-      this.listPlans);
+      this.listPlans,
+      this.horaires);
 
   factory ChantierView.fromJson(Map<String, dynamic> json) {
     return ChantierView(
@@ -44,7 +47,8 @@ class ChantierView {
         json['client'],
         List<Data>.from(json["listTravaux"].map((x) => Data.fromJson(x))),
         json['listMateriaux'].cast<String>(),
-        List<Plan>.from(json["listPlans"].map((x) => Plan.fromJson(x))));
+        List<Plan>.from(json["listPlans"].map((x) => Plan.fromJson(x))),
+        List<Horaire>.from(json["horaires"].map((x) => Horaire.fromJson(x))));
   }
 
   Color getStatusColor() {

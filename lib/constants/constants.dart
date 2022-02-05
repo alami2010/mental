@@ -57,7 +57,7 @@ const List<Color> kCategoriesSecondryColor = [
   Color(0xff9182F9)
 ];
 
-//const baseUrlMental = "https://alamio.fr/3h_metal";
+const baseUrlMental = "https://alamio.fr/3h_metal/public/";
 //
-const baseUrlMental = "http://127.0.0.1:8000/";
+//const baseUrlMental = "http://127.0.0.1:8000/";
 

@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:mental/constants/constants.dart';
 import 'package:mental/model/chantier.dart';
 import 'package:mental/model/data.dart';
+import 'package:mental/model/horaire.dart';
 import 'package:path/path.dart';
 
 const baseUrl = baseUrlMental + "api/";
@@ -187,6 +188,55 @@ class APIRest {
       body: jsonEncode(<String, String>{
         'id': id.toString(),
         'supp': supp,
+      }),
+    );
+  }
+
+  static Future getAllMateriauxManquant() {
+    var url = baseUrl + "materiaux-manquant";
+    showUrl(url);
+    return http.get(Uri.parse(url));
+  }
+
+  static Future createMateriauxManquant(String text) {
+    var url = baseUrl + "materiaux-manquant?name=" + text;
+    showUrl(url);
+    return http.post(Uri.parse(url));
+  }
+
+  static Future saveQte(int id, int qte) {
+    return http.post(
+      Uri.parse(baseUrl + 'materiaux-manquant-qte'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'id': id.toString(),
+        'qte': qte.toString(),
+      }),
+    );
+  }
+
+  static Future getMateriauxManquant() {
+    var url = baseUrl + "materiaux-manquant-qte";
+    showUrl(url);
+    return http.get(Uri.parse(url));
+  }
+
+  static Future saveHoraire(Horaire horaire, int id) {
+    return http.post(
+      Uri.parse(baseUrl + 'horaire'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'id': id.toString(),
+        'debutMatin': horaire.debutMatin,
+        'debutSoir': horaire.debutSoir,
+        'finMatin': horaire.finMatin,
+        'finSoir': horaire.finSoir,
+        'date': horaire.date,
+        'weekday': horaire.weekday.toString(),
       }),
     );
   }

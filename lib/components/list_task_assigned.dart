@@ -1,47 +1,67 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
- import 'package:mental/constants/constants.dart';
 
-class ListTaskAssignedData {
+class ListMenuData {
   final Icon icon;
   final String label;
   final Widget page;
-  final DateTime? editDate;
-  final String? assignTo;
+  final bool? alert;
+  final bool? showTrailing;
+  final Function? notifyParent;
 
-  const ListTaskAssignedData({
+  const ListMenuData({
     required this.icon,
     required this.label,
     required this.page,
-    this.editDate,
-    this.assignTo,
+    this.alert,
+    this.showTrailing,
+    this.notifyParent,
   });
 }
 
-class ListTaskAssigned extends StatelessWidget {
-  const ListTaskAssigned({
+class ListMenu extends StatelessWidget {
+  const ListMenu({
     required this.data,
     Key? key,
   }) : super(key: key);
 
-  final ListTaskAssignedData data;
+  final ListMenuData data;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () => {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => data.page))
-      },
-      hoverColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(kBorderRadius),
-      ),
-      leading: _buildIcon(),
-      title: _buildTitle(),
+    return Card(
+      elevation: 5,
+      child: ListTile(
+          onTap: () => {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => data.page))
+                    .then((value) {
+                  if (data.notifyParent != null) {
+                    data.notifyParent!();
+                  }
+                })
+              },
+          leading: _buildIcon(data.icon),
+          title: _buildTitle(),
+          trailing: getTrailing()),
     );
   }
 
-  Widget _buildIcon() {
+  Widget? getTrailing() {
+    return data.showTrailing == true
+        ? data.alert == false
+            ? _buildIcon(const Icon(
+                EvaIcons.alertTriangle,
+                color: Colors.orange,
+              ))
+            : _buildIcon(const Icon(
+                EvaIcons.doneAll,
+                color: Colors.green,
+              ))
+        : null;
+  }
+
+  Widget _buildIcon(Icon icon) {
     return Container(
       width: 50,
       height: 50,
@@ -49,7 +69,7 @@ class ListTaskAssigned extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         color: Colors.blueGrey.withOpacity(.1),
       ),
-      child: data.icon,
+      child: icon,
     );
   }
 
