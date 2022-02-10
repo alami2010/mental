@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'MenuAdmin.dart';
-import 'user/menu_user.dart';
+import 'admin/MenuAdmin.dart';
 import 'constants/constants.dart';
+import 'user/menu_user.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,6 +55,15 @@ class HomePageState extends State<HomePage> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
+
+  void handleClick(String value) {
+    switch (value) {
+      case 'Logout':
+        break;
+      case 'Settings':
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

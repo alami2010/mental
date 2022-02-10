@@ -1,12 +1,12 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:mental/chantier_details_admin.dart';
-import 'package:mental/chantier_progres_admin.dart';
+import 'package:mental/admin/chantier_progres_admin.dart';
+import 'package:mental/admin/photo_chantier_admin.dart';
+import 'package:mental/admin/travaux_supplementaire_admin.dart';
 import 'package:mental/model/chantier_view.dart';
-import 'package:mental/photo_chantier_admin.dart';
 import 'package:mental/shared/api_rest.dart';
-import 'package:mental/travaux_supplementaire_admin.dart';
 
+import 'chantier_details_admin.dart';
 import 'hour_work_admin.dart';
 
 class ChantierActionAdmin extends StatefulWidget {
@@ -71,11 +71,11 @@ class _ChantierActionAdminState extends State<ChantierActionAdmin> {
             Card(
               elevation: 5,
               child: ListTile(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            TravauxSuppAdmin(chantier: widget.chantier)));
-                  },
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          TravauxSuppAdmin(chantier: widget.chantier)));
+                },
                 leading: Icon(EvaIcons.homeOutline),
                 title: Text('Travaux supplémentaire'),
               ),

@@ -1,10 +1,9 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:mental/constants/constants.dart';
 import 'package:mental/model/chantier_view.dart';
 import 'package:mental/shared/tools.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import 'constants/constants.dart';
 
 class ChantierDetailsAdmin extends StatefulWidget {
   final ChantierView chantier;

@@ -4,7 +4,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:mental/shared/api_rest.dart';
 
-import 'model/data.dart';
+import '../model/data.dart';
 
 class ListMateriaux extends StatefulWidget {
   const ListMateriaux() : super();

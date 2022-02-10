@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:mental/model/client.dart';
 import 'package:mental/shared/api_rest.dart';
 
-import 'model/client.dart';
+
 
 class ListClient extends StatefulWidget {
   const ListClient() : super();

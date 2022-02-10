@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mental/components/menu_drawer.dart';
 import 'package:mental/model/data.dart';
-import 'package:mental/page_vide.dart';
 import 'package:mental/shared/api_rest.dart';
 import 'package:mental/user/chantier_start.dart';
 import 'package:mental/user/information.dart';
@@ -36,24 +36,27 @@ class _UserMenuState extends State<UserMenu> {
   List<ListMenuData> initList() {
     return [
       const ListMenuData(
-          icon: Icon(EvaIcons.home, color: Colors.blue),
+          color: Colors.redAccent,
+          icon: Icon(EvaIcons.home, color: Colors.white),
           label: "3H Métal",
           page: Information()),
       ListMenuData(
-        icon: const Icon(EvaIcons.homeOutline, color: Colors.blue),
+        color: Colors.redAccent,
+        icon: const Icon(EvaIcons.homeOutline,color: Colors.white),
         label: "Chantier en cours",
         page: ChantierStart(),
       ),
       const ListMenuData(
-        icon: Icon(EvaIcons.alertCircle, color: Colors.blue),
+        color: Colors.redAccent,
+        icon: Icon(EvaIcons.alertCircle,color: Colors.white),
         label: "Matérieux manquants",
         page: MateriauxManquantUser(),
       ),
-      const ListMenuData(
-        icon: Icon(EvaIcons.alertCircle, color: Colors.blue),
+/*      const ListMenuData(
+        icon: Icon(EvaIcons.alertCircle,color: Colors.white),
         label: "TVA",
         page: PageEmpty(),
-      ),
+      ),*/
     ];
   }
 
@@ -76,6 +79,10 @@ class _UserMenuState extends State<UserMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MenuDrawer(initList: initList()),
+      appBar: AppBar(
+        title: Text("3H Mental"),
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -87,7 +94,7 @@ class _UserMenuState extends State<UserMenu> {
               ...list
                   .asMap()
                   .entries
-                  .map((e) => ListMenu(
+                  .map((e) => CardMenu(
                         data: e.value,
                       ))
                   .toList(),

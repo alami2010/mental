@@ -1,10 +1,10 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class ListMenuData {
   final Icon icon;
   final String label;
   final Widget page;
+  final Color color;
   final bool? alert;
   final bool? showTrailing;
   final Function? notifyParent;
@@ -13,14 +13,15 @@ class ListMenuData {
     required this.icon,
     required this.label,
     required this.page,
+    required this.color,
     this.alert,
     this.showTrailing,
     this.notifyParent,
   });
 }
 
-class ListMenu extends StatelessWidget {
-  const ListMenu({
+class CardMenu extends StatelessWidget {
+  const CardMenu({
     required this.data,
     Key? key,
   }) : super(key: key);
@@ -29,56 +30,36 @@ class ListMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: ListTile(
-          onTap: () => {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => data.page))
-                    .then((value) {
-                  if (data.notifyParent != null) {
-                    data.notifyParent!();
-                  }
-                })
-              },
-          leading: _buildIcon(data.icon),
-          title: _buildTitle(),
-          trailing: getTrailing()),
-    );
-  }
-
-  Widget? getTrailing() {
-    return data.showTrailing == true
-        ? data.alert == false
-            ? _buildIcon(const Icon(
-                EvaIcons.alertTriangle,
-                color: Colors.orange,
-              ))
-            : _buildIcon(const Icon(
-                EvaIcons.doneAll,
-                color: Colors.green,
-              ))
-        : null;
-  }
-
-  Widget _buildIcon(Icon icon) {
-    return Container(
-      width: 50,
-      height: 50,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.blueGrey.withOpacity(.1),
-      ),
-      child: icon,
-    );
-  }
-
-  Widget _buildTitle() {
-    return Text(
-      data.label,
-      style: const TextStyle(fontWeight: FontWeight.bold),
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-    );
+    Size size = MediaQuery.of(context).size;
+    return Padding(
+        padding: const EdgeInsets.all(2),
+        child: Card(
+          child: SizedBox(
+              height: size.height * .1,
+              width: size.width * .39,
+              child: Center(
+                  child: ListTile(
+                onTap: () => {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => data.page))
+                      .then((value) {
+                    if (data.notifyParent != null) {
+                      data.notifyParent!();
+                    }
+                  })
+                },
+                leading: CircleAvatar(
+                  backgroundColor: data.color,
+                  child: data.icon,
+                ),
+                title: Text(
+                  data.label,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14),
+                ),
+              ))),
+        ));
   }
 }

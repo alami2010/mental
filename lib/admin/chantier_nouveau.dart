@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:mental/model/chantier.dart';
 import 'package:mental/shared/tools.dart';
 
-import 'components/multi_select.dart';
-import 'model/client.dart';
-import 'model/data.dart';
-import 'shared/api_rest.dart';
+import '../components/multi_select.dart';
+import '../model/client.dart';
+import '../model/data.dart';
+import '../shared/api_rest.dart';
 
 class NouveauChantier extends StatefulWidget {
   const NouveauChantier() : super();

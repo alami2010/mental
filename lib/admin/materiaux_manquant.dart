@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mental/shared/api_rest.dart';
 import 'package:mental/shared/tools.dart';
 
-import 'model/data.dart';
+import '../model/data.dart';
 
 class MateriauxManquant extends StatefulWidget {
   const MateriauxManquant() : super();

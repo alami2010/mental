@@ -1,7 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:mental/chantier_details_admin.dart';
-import 'package:mental/model/chantier_view.dart';
+import 'package:mental/admin/chantier_details_admin.dart';
+ import 'package:mental/model/chantier_view.dart';
 import 'package:mental/shared/api_rest.dart';
 import 'package:mental/user/chantier_progres_user.dart';
 import 'package:mental/user/photo_chantier.dart';
