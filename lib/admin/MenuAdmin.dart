@@ -89,17 +89,17 @@ class _MenuAdminState extends State<MenuAdmin> {
                   ],
                 ),
               ),
-/*              ElevatedButton(
+             ElevatedButton(
                   onPressed: () {
                     print('test me');
 
                     FlutterAppBadger.isAppBadgeSupported()
                         .then((value) => print(value));
 
-                    print(FlutterAppBadger.isAppBadgeSupported());
+
                     FlutterAppBadger.updateBadgeCount(1);
                   },
-                  child: Text('test me'))*/
+                  child: Text('test me'))
             ],
           ),
         ),
