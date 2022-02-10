@@ -111,40 +111,7 @@ class _MateriauxManquantUserState extends State<MateriauxManquantUser> {
                       ),
                     ),
                   ))
-/*
-              Expanded(
-                  child: ListView.builder(
-                      itemCount: materiauxManquat.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          height: 40,
-                          margin: EdgeInsets.all(2),
-                          color: Colors.blue.withOpacity(0.4),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                    flex: 6, // 20%
-                                    child: Text(
-                                      '${materiauxManquat[index].name} ',
-                                    )),
-                                Expanded(
-                                  flex: 1, // 20%
-                                  child: ElevatedButton(
-                                    child:
-                                        Icon(EvaIcons.trash, color: Colors.white),
-                                    onPressed: () {
 
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }))
-*/
             ]),
           ),
         ));

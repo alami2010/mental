@@ -39,26 +39,28 @@ class _ChantierDoneState extends State<ChantierDone> {
         ),
         body: Padding(
           padding: EdgeInsets.only(left: 15, top: 15, right: 15),
-          child: Column(children: <Widget>[
-            ...chantiers.map((e) => Card(
-              elevation: 5,
-              child: Container(
-                decoration: BoxDecoration(color: e.getStatusColor()),
-                child: ListTile(
-                  onTap: () => Navigator.of(context)
-                      .push(MaterialPageRoute(
-                      builder: (context) =>
-                          ChantierActionAdmin(chantier: e)))
-                      .then((value) {
-                    getChantiers();
-                  }),
-                  leading: Icon(EvaIcons.layers),
-                  title: Text(e.name),
-                  trailing:e.getStatusIcon(),
+          child: SingleChildScrollView(
+            child: Column(children: <Widget>[
+              ...chantiers.map((e) => Card(
+                elevation: 5,
+                child: Container(
+                  decoration: BoxDecoration(color: e.getStatusColor()),
+                  child: ListTile(
+                    onTap: () => Navigator.of(context)
+                        .push(MaterialPageRoute(
+                        builder: (context) =>
+                            ChantierActionAdmin(chantier: e)))
+                        .then((value) {
+                      getChantiers();
+                    }),
+                    leading: Icon(EvaIcons.layers),
+                    title: Text(e.name),
+                    trailing:e.getStatusIcon(),
+                  ),
                 ),
-              ),
-            )),
-          ]),
+              )),
+            ]),
+          ),
         ));
   }
 }

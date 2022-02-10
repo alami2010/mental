@@ -79,100 +79,96 @@ class _HourWorkUserState extends State<HourWorkUser> {
         body: Padding(
           padding: EdgeInsets.only(left: 15, top: 15, right: 15),
           child: SingleChildScrollView(
-            child: Column(children: <Widget>[
-              _DatePickerItem(
-                children: <Widget>[
-                  const Text('Date'),
-                  CupertinoButton(
-                    // Display a CupertinoDatePicker in date picker mode.
-                    onPressed: () => _showDialog(
-                      CupertinoDatePicker(
-                        minimumDate: DateTime.now(),
-                        initialDateTime: DateTime.now(),
-                        mode: CupertinoDatePickerMode.date,
-                        // This is called when the user changes the date.
-                        onDateTimeChanged: (DateTime newDate) {
-                          print(newDate.toString());
-                          setState(() => date = newDate);
-                        },
+            child: SingleChildScrollView(
+              child: Column(children: <Widget>[
+                _DatePickerItem(
+                  children: <Widget>[
+                    const Text('Date'),
+                    CupertinoButton(
+                      // Display a CupertinoDatePicker in date picker mode.
+                      onPressed: () => _showDialog(
+                        CupertinoDatePicker(
+                          minimumDate: DateTime.now(),
+                          initialDateTime: DateTime.now(),
+                          mode: CupertinoDatePickerMode.date,
+                          // This is called when the user changes the date.
+                          onDateTimeChanged: (DateTime newDate) {
+                            print(newDate.toString());
+                            setState(() => date = newDate);
+                          },
+                        ),
+                      ),
+                      // In this example, the date value is formatted manually. You can use intl package
+                      // to format the value based on user's locale settings.
+                      child: Text(
+                        '${date.day}/${date.month}/${date.year}',
                       ),
                     ),
-                    // In this example, the date value is formatted manually. You can use intl package
-                    // to format the value based on user's locale settings.
-                    child: Text(
-                      '${date.day}/${date.month}/${date.year}',
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                      flex: 2, // 20%
-                      child: buildDatePickerTime('Debut matin', dateDebutMatin,
-                          (newDate) {
-                        print(newDate);
-                        setState(() => dateDebutMatin = newDate);
-                      })),
-                  Expanded(
-                      flex: 2, // 20%
-                      child: buildDatePickerTime('Fin matin', dateFinMatin,
-                          (newDate) {
-                        print(newDate);
-                        setState(() => dateFinMatin = newDate);
-                      })),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                      flex: 2, // 20%
-                      child: buildDatePickerTime('Debut soir', dateDebutSoir,
-                          (newDate) {
-                        print(newDate);
-                        setState(() => dateDebutSoir = newDate);
-                      })),
-                  Expanded(
-                      flex: 2, // 20%
-                      child: buildDatePickerTime('Fin satin', dateFinSoir,
-                          (newDate) {
-                        print(newDate);
-                        setState(() => dateFinSoir = newDate);
-                      })),
-                ],
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size.fromHeight(
-                      40), // fromHeight use double.infinity as width and 40 is the height
+                  ],
                 ),
-                child: Text('Sauvegarder'),
-                onPressed: () {
-                  saveHoraire();
-                },
-              ),
-              SizedBox(height: 20),
-              ...widget.chantier.horaires.map((e) => Card(
-                  elevation: 5,
-                  child: Container(
-                    child: ListTile(
-                      leading: Icon(EvaIcons.clock),
-                      title: Text(
-                          getDyaName(e.weekday) + ' ' + e.date.split(' ')[0]),
-                      subtitle: Text(e.debutMatin.substring(10, 16) +
-                          '-' +
-                          e.finMatin.substring(10, 16) +
-                          '  ' +
-                          e.debutSoir.substring(10, 16) +
-                          '-' +
-                          e.finSoir.substring(10, 16)),
-                    ),
-                  )))
-            ]),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                        flex: 2, // 20%
+                        child: buildDatePickerTime('Debut matin', dateDebutMatin,
+                            (newDate) {
+                          print(newDate);
+                          setState(() => dateDebutMatin = newDate);
+                        })),
+                    Expanded(
+                        flex: 2, // 20%
+                        child: buildDatePickerTime('Fin matin', dateFinMatin,
+                            (newDate) {
+                          print(newDate);
+                          setState(() => dateFinMatin = newDate);
+                        })),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                        flex: 2, // 20%
+                        child: buildDatePickerTime('Debut soir', dateDebutSoir,
+                            (newDate) {
+                          print(newDate);
+                          setState(() => dateDebutSoir = newDate);
+                        })),
+                    Expanded(
+                        flex: 2, // 20%
+                        child: buildDatePickerTime('Fin satin', dateFinSoir,
+                            (newDate) {
+                          print(newDate);
+                          setState(() => dateFinSoir = newDate);
+                        })),
+                  ],
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size.fromHeight(
+                        40), // fromHeight use double.infinity as width and 40 is the height
+                  ),
+                  child: Text('Sauvegarder'),
+                  onPressed: () {
+                    saveHoraire();
+                  },
+                ),
+                SizedBox(height: 20),
+                ...widget.chantier.horaires.map((e) => Card(
+                    elevation: 5,
+                    child: Container(
+                      child: ListTile(
+                        leading: Icon(EvaIcons.clock),
+                        title: Text(
+                            getDyaName(e.weekday) + ' ' + e.date.split(' ')[0]),
+                        subtitle: Text(buildHours(e)),
+                      ),
+                    )))
+              ]),
+            ),
           ),
         ));
   }
@@ -199,11 +195,26 @@ class _HourWorkUserState extends State<HourWorkUser> {
           // In this example, the date value is formatted manually. You can use intl package
           // to format the value based on user's locale settings.
           child: Text(
-            '${dateTime!.hour}:${dateTime!.minute}',
+            '${dateTime?.hour}:${dateTime?.minute}',
           ),
         ),
       ],
     );
+  }
+
+  String buildHours(Horaire e) {
+    return buildHour(e.debutMatin) +
+        '-' +
+        buildHour(e.finMatin) +
+        '  ' +
+        buildHour(e.debutSoir) +
+        '-' +
+        buildHour(e.finSoir);
+  }
+
+  String buildHour(String e) {
+    DateTime date = DateTime.parse(e);
+    return date.hour.toString() + ':' + date.minute.toString();
   }
 
   String getDyaName(int weekday) {

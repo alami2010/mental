@@ -1,6 +1,6 @@
 class Client {
   // field
-  int? id;
+  int id;
   String name;
   bool professional;
 

@@ -117,7 +117,7 @@ class _ChantierDetailsAdminState extends State<ChantierDetailsAdmin> {
                       child: ListTile(
                         title: Text(item.name),
                         onTap: () {
-                          Tools.open(baseUrlMental + "/public/files/" + item.url);
+                          Tools.open(baseUrlMental + "/files/" + item.url);
                         },
                       ),
                     ); // you can add your available item here

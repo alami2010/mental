@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mental/chantier_details_admin.dart';
 import 'package:mental/chantier_progres_admin.dart';
 import 'package:mental/model/chantier_view.dart';
+import 'package:mental/photo_chantier_admin.dart';
 import 'package:mental/shared/api_rest.dart';
 import 'package:mental/travaux_supplementaire_admin.dart';
 
@@ -94,6 +95,11 @@ class _ChantierActionAdminState extends State<ChantierActionAdmin> {
             Card(
               elevation: 5,
               child: ListTile(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          PhotoChantierAdmin(chantier: widget.chantier)));
+                },
                 leading: Icon(EvaIcons.colorPicker),
                 title: Text('Photos'),
               ),

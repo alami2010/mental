@@ -31,60 +31,62 @@ class _ChantierProgressUserState extends State<ChantierProgressUser> {
         ),
         body: Padding(
           padding: EdgeInsets.only(left: 15, top: 15, right: 15),
-          child: Column(children: <Widget>[
-            ...widget.chantier.listTravaux.map((e) => Card(
-                  elevation: 5,
-                  child: Column(
-                    children: [
-                      Slider(
-                        value: e.progress.toDouble(),
-                        max: 100,
-                        divisions: 5,
-                        label: e.progress.toString(),
-                        onChanged: (double value) {
-                          setState(() {
-                            e.progress = value.toInt();
-                          });
-                        },
-                      ),
-                      ListTile(
-                        leading: Icon(EvaIcons.person),
-                        title: Text(e.name),
-                      ),
-                    ],
-                  ),
-                )),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size.fromHeight(
-                    40), // fromHeight use double.infinity as width and 40 is the height
+          child: SingleChildScrollView(
+            child: Column(children: <Widget>[
+              ...widget.chantier.listTravaux.map((e) => Card(
+                    elevation: 5,
+                    child: Column(
+                      children: [
+                        Slider(
+                          value: e.progress.toDouble(),
+                          max: 100,
+                          divisions: 5,
+                          label: e.progress.toString(),
+                          onChanged: (double value) {
+                            setState(() {
+                              e.progress = value.toInt();
+                            });
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(EvaIcons.person),
+                          title: Text(e.name),
+                        ),
+                      ],
+                    ),
+                  )),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size.fromHeight(
+                      40), // fromHeight use double.infinity as width and 40 is the height
+                ),
+                child: Text('Enregistrer'),
+                onPressed: () {
+                  saveProgress();
+                },
               ),
-              child: Text('Enregistrer'),
-              onPressed: () {
-                saveProgress();
-              },
-            ),
-            SizedBox(height: 100), // give it width
+              SizedBox(height: 100), // give it width
 
-            CircularPercentIndicator(
-              radius: 120.0,
-              lineWidth: 13.0,
-              animation: true,
-              percent: moyenne/100,
-              center: new Text(
-                moyenne.toString()+"%",
-                style:
-                new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-              ),
-              footer: new Text(
-                "Avancement",
-                style:
-                new TextStyle(fontWeight: FontWeight.bold, fontSize: 17.0),
-              ),
-              circularStrokeCap: CircularStrokeCap.round,
-              progressColor: Colors.blue,
-            )
-          ]),
+              CircularPercentIndicator(
+                radius: 120.0,
+                lineWidth: 13.0,
+                animation: true,
+                percent: moyenne/100,
+                center: new Text(
+                  moyenne.toString()+"%",
+                  style:
+                  new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                ),
+                footer: new Text(
+                  "Avancement",
+                  style:
+                  new TextStyle(fontWeight: FontWeight.bold, fontSize: 17.0),
+                ),
+                circularStrokeCap: CircularStrokeCap.round,
+                progressColor: Colors.blue,
+              )
+            ]),
+          ),
         ));
   }
 

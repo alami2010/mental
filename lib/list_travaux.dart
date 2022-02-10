@@ -25,17 +25,17 @@ class _ListTravauxState extends State<ListTravaux> {
   void createTravail() {
     APIRest.createTravail(nameController.text).then((value) {
       var travail = json.decode(value.body);
-       setState(() {
+      setState(() {
         travaux.insert(0, Data.fromJson(travail));
       });
     });
   }
 
-  void removeTravail(int index, int? id) {
+  void removeTravail(int? id) {
     setState(() {
       APIRest.deletTravail(id!).then((response) {
         setState(() {
-          travaux.removeAt(index);
+          travaux = travaux.where((element) => element.id != id).toList();
         });
       });
     });
@@ -56,8 +56,7 @@ class _ListTravauxState extends State<ListTravaux> {
         appBar: AppBar(
           title: Text('Liste Travaux'),
         ),
-        body: Padding(
-          padding: EdgeInsets.only(left: 15, top: 15, right: 15),
+        body: SingleChildScrollView(
           child: Column(children: <Widget>[
             TextField(
               controller: nameController,
@@ -76,39 +75,20 @@ class _ListTravauxState extends State<ListTravaux> {
                 createTravail();
               },
             ),
-            Expanded(
-                child: ListView.builder(
-                    itemCount: travaux.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        height: 40,
-                        margin: EdgeInsets.all(2),
-                        color: Colors.blue.withOpacity(0.4),
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                  flex: 6, // 20%
-                                  child: Text(
-                                    '${travaux[index].name} ',
-                                  )),
-                              Expanded(
-                                flex: 1, // 20%
-                                child: ElevatedButton(
-                                  child:
-                                      Icon(EvaIcons.trash, color: Colors.white),
-                                  onPressed: () {
-                                    showAlertDialog(
-                                        context, index, travaux[index].id);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }))
+            ...travaux.map(
+              (e) => Card(
+                elevation: 5,
+                child: ListTile(
+                  title: Text(e.name),
+                  trailing: ElevatedButton(
+                    child: Icon(EvaIcons.trash, color: Colors.white),
+                    onPressed: () {
+                      showAlertDialog(context, -1, e.id);
+                    },
+                  ),
+                ),
+              ),
+            )
           ]),
         ));
   }
@@ -126,7 +106,7 @@ class _ListTravauxState extends State<ListTravaux> {
       child: Text("Continue"),
       onPressed: () {
         Navigator.of(context).pop(); // dismiss dialog
-        removeTravail(index, id);
+        removeTravail(id);
       },
     );
 

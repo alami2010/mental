@@ -19,58 +19,60 @@ class _InformationState extends State<Information> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Center(
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 50),
-                Container(
-                    height: 150, child: Image.asset(ImageRasterPath.logo)),
-                const SizedBox(height: 50),
-                Text(
-                  "3H Métal",
-                  style: TextStyle(fontSize: 30),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "SASU Capital",
-                  style: TextStyle(fontSize: 30),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "1000 €",
-                  style: TextStyle(fontSize: 30),
-                ),
-                const SizedBox(height: 40),
-                Card(
-                  elevation: 5,
-                  child: ListTile(
-                    onTap: () {
-                      Tools.launchMap("57 Rue des boutons d'or dd 33370 YVRAC");
-                    },
-                    leading: Icon(EvaIcons.pin),
-                    title: Text("57 Rue des boutons d'or dd 33370 YVRAC"),
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  const SizedBox(height: 50),
+                  Container(
+                      height: 150, child: Image.asset(ImageRasterPath.logo)),
+                  const SizedBox(height: 50),
+                  Text(
+                    "3H Métal",
+                    style: TextStyle(fontSize: 30),
                   ),
-                ),
-                Card(
-                  elevation: 5,
-                  child: ListTile(
-                    onTap: () {
-                      Tools.open('https://www.3hmetal.fr');
-                    },
-                    leading: Icon(EvaIcons.globe2Outline),
-                    title: Text('https://www.3hmetal.fr'),
+                  const SizedBox(height: 10),
+                  Text(
+                    "SASU Capital",
+                    style: TextStyle(fontSize: 30),
                   ),
-                ),
-                Card(
-                  elevation: 5,
-                  child: ListTile(
-                    onTap: () {
-                      Tools.open('tel:0625812179');
-                    },
-                    leading: Icon(EvaIcons.phone),
-                    title: Text('Appeler'),
+                  const SizedBox(height: 10),
+                  Text(
+                    "1000 €",
+                    style: TextStyle(fontSize: 30),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 40),
+                  Card(
+                    elevation: 5,
+                    child: ListTile(
+                      onTap: () {
+                        Tools.launchMap("57 Rue des boutons d'or dd 33370 YVRAC");
+                      },
+                      leading: Icon(EvaIcons.pin),
+                      title: Text("57 Rue des boutons d'or dd 33370 YVRAC"),
+                    ),
+                  ),
+                  Card(
+                    elevation: 5,
+                    child: ListTile(
+                      onTap: () {
+                        Tools.open('https://www.3hmetal.fr');
+                      },
+                      leading: Icon(EvaIcons.globe2Outline),
+                      title: Text('https://www.3hmetal.fr'),
+                    ),
+                  ),
+                  Card(
+                    elevation: 5,
+                    child: ListTile(
+                      onTap: () {
+                        Tools.open('tel:0625812179');
+                      },
+                      leading: Icon(EvaIcons.phone),
+                      title: Text('Appeler'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

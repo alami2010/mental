@@ -117,7 +117,7 @@ class _ChantierDetailsUserState extends State<ChantierDetailsUser> {
                         title: Text(item.name),
                         onTap: () {
                           Tools.open(
-                              baseUrlMental+"/public/files/" +
+                              baseUrlMental+"/files/" +
                                   item.url);
                         },
                       ),

@@ -4,7 +4,6 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:mental/shared/api_rest.dart';
 
-import 'model/client.dart';
 import 'model/data.dart';
 
 class ListMateriaux extends StatefulWidget {
@@ -39,11 +38,11 @@ class _ListMateriauxState extends State<ListMateriaux> {
     });
   }
 
-  void removeMateriaux(int index, int? id) {
+  void removeMateriaux(int? id) {
     setState(() {
       APIRest.deletMateriaux(id!).then((response) {
         setState(() {
-          materiaux.removeAt(index);
+          materiaux = materiaux.where((element) => element.id != id).toList();
         });
       });
     });
@@ -64,8 +63,7 @@ class _ListMateriauxState extends State<ListMateriaux> {
         appBar: AppBar(
           title: Text('Liste Materiaux'),
         ),
-        body: Padding(
-          padding: EdgeInsets.only(left: 15, top: 15, right: 15),
+        body: SingleChildScrollView(
           child: Column(children: <Widget>[
             TextField(
               controller: nameController,
@@ -84,39 +82,20 @@ class _ListMateriauxState extends State<ListMateriaux> {
                 createMateriaux();
               },
             ),
-            Expanded(
-                child: ListView.builder(
-                    itemCount: materiaux.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        height: 40,
-                        margin: EdgeInsets.all(2),
-                        color: Colors.blue.withOpacity(0.4),
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                  flex: 6, // 20%
-                                  child: Text(
-                                    '${materiaux[index].name} ',
-                                  )),
-                              Expanded(
-                                flex: 1, // 20%
-                                child: ElevatedButton(
-                                  child:
-                                      Icon(EvaIcons.trash, color: Colors.white),
-                                  onPressed: () {
-                                    showAlertDialog(
-                                        context, index, materiaux[index].id);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }))
+            ...materiaux.map(
+              (e) => Card(
+                elevation: 5,
+                child: ListTile(
+                  title: Text(e.name),
+                  trailing: ElevatedButton(
+                    child: Icon(EvaIcons.trash, color: Colors.white),
+                    onPressed: () {
+                      showAlertDialog(context, -1, e.id);
+                    },
+                  ),
+                ),
+              ),
+            ),
           ]),
         ));
   }
@@ -134,7 +113,7 @@ class _ListMateriauxState extends State<ListMateriaux> {
       child: Text("Continue"),
       onPressed: () {
         Navigator.of(context).pop(); // dismiss dialog
-        removeMateriaux(index, id);
+        removeMateriaux(id);
       },
     );
 

@@ -35,11 +35,12 @@ class _ListClientState extends State<ListClient> {
     });
   }
 
-  void removeClient(int index, int? id) {
+  void removeClient( int id) {
     setState(() {
-      APIRest.deleteClient(id!).then((response) {
+      APIRest.deleteClient(id).then((response) {
         setState(() {
-          clients.removeAt(index);
+           clients = clients.where((element) => element.id != id).toList();
+
         });
       });
     });
@@ -60,8 +61,7 @@ class _ListClientState extends State<ListClient> {
         appBar: AppBar(
           title: Text('Liste Client'),
         ),
-        body: Padding(
-          padding: EdgeInsets.only(left: 15, top: 15, right: 15),
+        body: SingleChildScrollView(
           child: Column(children: <Widget>[
             TextField(
               controller: nameController,
@@ -113,63 +113,42 @@ class _ListClientState extends State<ListClient> {
                 addClient(isSelected[0]);
               },
             ),
-            Expanded(
-                child: ListView.builder(
-                    itemCount: clients.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        height: 40,
-                        margin: EdgeInsets.all(2),
-                        color: Colors.blue.withOpacity(0.4),
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                  flex: 6, // 20%
-                                  child: Text(
-                                    '${clients[index].name} ',
-                                  )),
-                              Expanded(
-                                flex: 1, // 20%
-                                child: clients[index].professional
-                                    ? Icon(EvaIcons.personDone)
-                                    : Icon(EvaIcons.person),
-                              ),
-                              Expanded(
-                                flex: 1, // 20%
-                                child: ElevatedButton(
-                                  child:
-                                      Icon(EvaIcons.trash, color: Colors.white),
-                                  onPressed: () {
-                                    showAlertDialog(
-                                        context, index, clients[index].id);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    })),
-          ]),
+            ...clients.map(
+                  (e) => Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: e.professional
+                      ? Icon(EvaIcons.personDone)
+                      : Icon(EvaIcons.person),
+                  title: Text(e.name),
+                  trailing: ElevatedButton(
+                    child: Icon(EvaIcons.trash, color: Colors.white),
+                    onPressed: () {
+                      showAlertDialog(context, e.id);
+                    },
+                  ),
+                ),
+              ),
+            ),
+
+           ]),
         ));
   }
 
-  showAlertDialog(BuildContext context, int index, int? id) {
+  showAlertDialog(BuildContext context, int id) {
     // set up the buttons
     Widget cancelButton = TextButton(
       child: Text("Sortir"),
       onPressed: () {
         Navigator.of(context).pop(); // dismiss dialog
-        print(index.toString());
+
       },
     );
     Widget continueButton = TextButton(
       child: Text("Continue"),
       onPressed: () {
         Navigator.of(context).pop(); // dismiss dialog
-        removeClient(index, id);
+        removeClient(id);
       },
     );
 

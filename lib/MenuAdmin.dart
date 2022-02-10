@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:mental/chantier_done.dart';
 import 'package:mental/shared/api_rest.dart';
 
@@ -13,7 +14,7 @@ import 'constants/constants.dart';
 import 'list_client.dart';
 import 'list_materiaux.dart';
 import 'list_travaux.dart';
-import 'materiauxManquant.dart';
+import 'materiaux_manquant.dart';
 import 'model/data.dart';
 
 class MenuAdmin extends StatefulWidget {
@@ -102,6 +103,14 @@ class _MenuAdminState extends State<MenuAdmin> {
                         data: e.value,
                       ))
                   .toList(),
+              ElevatedButton(onPressed: () {
+                print('test me');
+
+                FlutterAppBadger.isAppBadgeSupported().then((value) =>  print(value));
+
+                  print(FlutterAppBadger.isAppBadgeSupported());
+                FlutterAppBadger.updateBadgeCount(1);
+              }, child: Text('test me'))
             ],
           ),
         ),

@@ -101,13 +101,10 @@ class APIRest {
   }
 
   static Future uploadFileMobile(List<io.File> files, Chantier chantier) async {
-    print("hello");
-    //---Create http package multipart request object
     final request = http.MultipartRequest(
       "POST",
       Uri.parse(baseUrl + 'nv-chantier'),
     );
-    //-----add other fields if needed
     request.fields["name"] = chantier.name;
     request.fields["adresse"] = chantier.adresse;
     request.fields["description"] = chantier.description;
@@ -119,19 +116,12 @@ class APIRest {
       files.forEach((element) async {
         var pic = await http.MultipartFile.fromPath(
             basename(element.path), element.path);
-        //add multipart to request
         request.files.add(pic);
       });
     }
 
-    //-------Send request
     var resp = await request.send();
-
-    //------Read response
     String result = await resp.stream.bytesToString();
-
-    //-------Your response
-    print(result);
     print("upload finish");
   }
 
@@ -239,5 +229,47 @@ class APIRest {
         'weekday': horaire.weekday.toString(),
       }),
     );
+  }
+
+  static Future getPhotos(int id) {
+    var url = baseUrl + "photo-chantier?id=" + id.toString();
+    showUrl(url);
+    return http.get(Uri.parse(url));
+  }
+
+  static Future uploadPhotoWeb(
+      List<PlatformFile> platformFiles, int idChantier) async {
+    try {
+      var formData = dio.FormData.fromMap({"id": idChantier});
+      if (!platformFiles.isEmpty) {
+        platformFiles.forEach((element) {
+          var mfile = dio.MultipartFile.fromBytes(element.bytes!,
+              filename: element.name);
+          formData.files.add(MapEntry(element.name, mfile));
+        });
+      }
+
+      return await await dio.Dio()
+          .post(baseUrl + 'photo-chantier-upload', data: formData);
+    } on dio.DioError catch (error) {
+      throw Exception(error);
+    }
+  }
+
+  static Future uploadPhotoMobile(List<io.File> files, int idChantier) async {
+    final request = http.MultipartRequest(
+      "POST",
+      Uri.parse(baseUrl + 'photo-chantier-upload'),
+    );
+    request.fields["id"] = idChantier.toString();
+    if (!files.isEmpty) {
+      files.forEach((element) async {
+        var pic = await http.MultipartFile.fromPath(
+            basename(element.path), element.path);
+        request.files.add(pic);
+      });
+    }
+    var resp = await request.send();
+    return await resp.stream.bytesToString();
   }
 }

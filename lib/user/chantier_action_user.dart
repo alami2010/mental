@@ -4,6 +4,7 @@ import 'package:mental/chantier_details_admin.dart';
 import 'package:mental/model/chantier_view.dart';
 import 'package:mental/shared/api_rest.dart';
 import 'package:mental/user/chantier_progres_user.dart';
+import 'package:mental/user/photo_chantier.dart';
 import 'package:mental/user/travaux_supplementaire_user.dart';
 
 import 'hour_work.dart';
@@ -94,6 +95,11 @@ class _ChantierActionUserState extends State<ChantierActionUser> {
             Card(
               elevation: 5,
               child: ListTile(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          PhotoChantier(chantier: widget.chantier)));
+                },
                 leading: Icon(EvaIcons.colorPicker),
                 title: Text('Photos'),
               ),

@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mental/model/chantier_view.dart';
 import 'package:mental/model/horaire.dart';
-import 'package:mental/shared/api_rest.dart';
 
 class HourWorkAdmin extends StatefulWidget {
   final ChantierView chantier;
@@ -30,9 +27,6 @@ class _HourWorkAdminState extends State<HourWorkAdmin> {
     setState(() {});
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     print(widget.chantier.horaires);
@@ -44,9 +38,7 @@ class _HourWorkAdminState extends State<HourWorkAdmin> {
           padding: EdgeInsets.only(left: 15, top: 15, right: 15),
           child: SingleChildScrollView(
             child: Column(children: <Widget>[
-
               const SizedBox(height: 10),
-
               SizedBox(height: 20),
               ...widget.chantier.horaires.map((e) => Card(
                     elevation: 5,
@@ -55,19 +47,28 @@ class _HourWorkAdminState extends State<HourWorkAdmin> {
                         leading: Icon(EvaIcons.clock),
                         title: Text(
                             getDyaName(e.weekday) + ' ' + e.date.split(' ')[0]),
-                        subtitle: Text(e.debutMatin +
-                            '-' +
-                            e.finMatin +
-                            '  ' +
-                            e.debutSoir +
-                            '-' +
-                            e.finSoir),
+                        subtitle: Text(buildHours(e)),
                       ),
                     ),
                   ))
             ]),
           ),
         ));
+  }
+
+  String buildHours(Horaire e) {
+    return buildHour(e.debutMatin) +
+        '-' +
+        buildHour(e.finMatin) +
+        '  ' +
+        buildHour(e.debutSoir) +
+        '-' +
+        buildHour(e.finSoir);
+  }
+
+  String buildHour(String e) {
+    DateTime date = DateTime.parse(e);
+    return date.hour.toString() + ':' + date.minute.toString();
   }
 
   String getDyaName(int weekday) {

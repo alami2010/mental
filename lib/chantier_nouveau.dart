@@ -168,32 +168,42 @@ class _NouveauChantierState extends State<NouveauChantier> {
         ),
         body: Padding(
           padding: EdgeInsets.only(left: 15, top: 15, right: 15),
-          child: Column(children: <Widget>[
-            Row(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+
               children: <Widget>[
-                Expanded(flex: 2, child: Text('Client ')),
-                Expanded(
-                  flex: 3,
-                  child: DropdownButton<Client>(
-                    value: client,
-                    isDense: true,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.black),
-                    onChanged: (Client? newValue) {
-                      setState(() {
-                        client = newValue!;
-                      });
-                    },
-                    items: allClients
-                        .map<DropdownMenuItem<Client>>((Client value) {
-                      return DropdownMenuItem<Client>(
-                        value: value,
-                        child: Text(value.name),
-                      );
-                    }).toList(),
+
+            Container(
+              height: 50,
+              child: Row(
+
+                children: <Widget>[
+                  Expanded(flex: 2, child: Text('Client ')),
+                  Expanded(
+                    flex: 3,
+                    child: DropdownButton<Client>(
+                      isExpanded: true,
+                      value: client,
+                      isDense: true,
+                      elevation: 16,
+                      icon: Icon(EvaIcons.gridOutline) ,
+                      style: const TextStyle(color: Colors.black),
+                      onChanged: (Client? newValue) {
+                        setState(() {
+                          client = newValue!;
+                        });
+                      },
+                      items: allClients
+                          .map<DropdownMenuItem<Client>>((Client value) {
+                        return DropdownMenuItem<Client>(
+                          value: value,
+                          child: Text(value.name,style: TextStyle(fontSize:20),),
+                        );
+                      }).toList(),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             TextField(
               controller: nameController,
