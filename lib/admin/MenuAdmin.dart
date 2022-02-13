@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
@@ -92,12 +93,15 @@ class _MenuAdminState extends State<MenuAdmin> {
              ElevatedButton(
                   onPressed: () {
                     print('test me');
-
                     FlutterAppBadger.isAppBadgeSupported()
-                        .then((value) => print(value));
+                        .then((value) {
+                          if(value){
+                            FlutterAppBadger.updateBadgeCount(5);
+                          }
+                    });
 
 
-                    FlutterAppBadger.updateBadgeCount(1);
+
                   },
                   child: Text('test me'))
             ],

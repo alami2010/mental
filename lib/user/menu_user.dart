@@ -36,13 +36,13 @@ class _UserMenuState extends State<UserMenu> {
   List<ListMenuData> initList() {
     return [
       const ListMenuData(
-          color: Colors.redAccent,
+          color: Colors.greenAccent,
           icon: Icon(EvaIcons.home, color: Colors.white),
           label: "3H Métal",
           page: Information()),
-      ListMenuData(
-        color: Colors.redAccent,
-        icon: const Icon(EvaIcons.homeOutline,color: Colors.white),
+      const ListMenuData(
+        color: Colors.blueAccent,
+        icon:  Icon(EvaIcons.homeOutline,color: Colors.white),
         label: "Chantier en cours",
         page: ChantierStart(),
       ),
@@ -52,11 +52,6 @@ class _UserMenuState extends State<UserMenu> {
         label: "Matérieux manquants",
         page: MateriauxManquantUser(),
       ),
-/*      const ListMenuData(
-        icon: Icon(EvaIcons.alertCircle,color: Colors.white),
-        label: "TVA",
-        page: PageEmpty(),
-      ),*/
     ];
   }
 

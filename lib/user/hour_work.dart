@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,10 +42,25 @@ class _HourWorkUserState extends State<HourWorkUser> {
                 date.weekday),
             widget.chantier.id)
         .then((value) {
-      var horaire = json.decode(value.body);
+      var horaire = Horaire.fromJson(json.decode(value.body));
       print(horaire);
       setState(() {
-        widget.chantier.horaires.insert(0, Horaire.fromJson(horaire));
+
+        final Event event = Event(
+          title: 'Chantier '+widget.chantier.name,
+          description: buildHours(horaire),
+          location: widget.chantier.adresse,
+          startDate: DateTime.now(),
+          endDate: DateTime.now().add(Duration(hours: 1)),
+          iosParams: const IOSParams(
+            reminder: Duration(/* Ex. hours:1 */), // on iOS, you can set alarm notification after your event.
+          ),
+          androidParams: const AndroidParams(
+            emailInvites: [], // on Android, you can add invite emails to your event.
+          ),
+        );
+        Add2Calendar.addEvent2Cal(event);
+        widget.chantier.horaires.insert(0, horaire);
       });
     });
   }

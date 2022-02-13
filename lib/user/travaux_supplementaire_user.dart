@@ -26,13 +26,17 @@ class _TravauxSuppState extends State<TravauxSupp> {
 
   void saveTravauxSupp() {
     if (nameController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("le text est vide"),
       ));
       return;
     }
     APIRest.saveTravauxSupp(nameController.text, widget.chantier.id)
         .then((value) {
+
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("bien enregistrer"),
+      ));
       var material = json.decode(value.body);
       setState(() {});
     });

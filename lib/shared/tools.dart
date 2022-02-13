@@ -97,9 +97,9 @@ class Tools {
 
   static Future<void> open(String url) async {
     print(url);
-    if (await canLaunch(url))
+    if (await canLaunch(url)) {
       await launch(url);
-    else
+    } else
       // can't launch url, there is some error
       throw "Could not launch $url";
   }
