@@ -11,7 +11,13 @@ class SPHelper {
     prefs.setString("type", type);
   }
 
-  Future readUserType(String type) async {
-    return prefs.getString('action');
+  Future readUserType() async {
+    return prefs.getString("type");
+  }
+
+
+
+  Future removeUserType() async {
+    return prefs.remove('type');
   }
 }

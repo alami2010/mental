@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mental/shared/sp_helper.dart';
 
 import 'admin/MenuAdmin.dart';
 import 'constants/constants.dart';
@@ -11,22 +12,27 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  Future<String> showLoginPage() async {
+    SPHelper helper = SPHelper();
+
+    // sharedPreferences.setString('user', 'hasuser');
+    var type = await helper.readUserType();
+    return type;
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
+
       theme: ThemeData(
         fontFamily: Font.nunito,
         primarySwatch: Colors.blue,
       ),
-      home: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(ImageRasterPath.backGroundPhoto),
-                  fit: BoxFit.cover)),
-          child: const HomePage()),
+      home: const HomePage(),
+      //https://stackoverflow.com/questions/55213527/flutter-set-startup-page-based-on-shared-preference
     );
   }
 }
@@ -44,21 +50,25 @@ class HomePage extends StatefulWidget {
 // This class holds data related to the form.
 class HomePageState extends State<HomePage> {
   late String password;
-
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
 
-  void handleClick(String value) {
-    switch (value) {
-      case 'Logout':
-        break;
-      case 'Settings':
-        break;
-    }
+  SPHelper helper = SPHelper();
+
+  @override
+  void initState() {
+    super.initState();
+    helper.init().then((value) {
+      helper.readUserType().then((userType) {
+        print(userType);
+        if ("ADMIN" == userType) {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => MenuAdmin()));
+        } else if ("ADMIN" == userType) {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => UserMenu()));
+        }
+      });
+    });
   }
 
   @override
@@ -88,7 +98,7 @@ class HomePageState extends State<HomePage> {
                       // The validator receives the text that the user has entered.
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Veuillez saisir du texte';
+                          return 'Veuillez votre code';
                         }
                         setState(() {
                           password = value;
@@ -107,9 +117,11 @@ class HomePageState extends State<HomePage> {
                             FocusScope.of(context).requestFocus(FocusNode());
 
                             if (password == "1948") {
+                              helper.writeUserType("ADMIN");
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => MenuAdmin()));
                             } else if (password == "1966") {
+                              helper.writeUserType("USER");
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => UserMenu()));
                             } else {

@@ -78,13 +78,31 @@ class _UserMenuState extends State<UserMenu> {
       appBar: AppBar(
         title: Text("3H Mental"),
       ),
-      body: Center(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(ImageRasterPath.backGroundPhoto),
+            fit: BoxFit.fill,
+          ),
+        ),
+        constraints: BoxConstraints.expand(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: <Widget>[
               const SizedBox(height: 50),
-              Container(height: 150, child: Image.asset(ImageRasterPath.logo)),
+              Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white,
+
+                    image: DecorationImage(
+                      image: AssetImage(ImageRasterPath.logo),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  height: 150,
+                  child: Image.asset(ImageRasterPath.logo)),
               const SizedBox(height: 50),
               ...list
                   .asMap()

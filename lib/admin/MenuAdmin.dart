@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mental/components/list_task_assigned.dart';
 import 'package:mental/components/menu_drawer.dart';
 import 'package:mental/constants/constants.dart';
+import 'package:mental/main.dart';
 import 'package:mental/model/data.dart';
 import 'package:mental/shared/api_rest.dart';
 
@@ -43,7 +45,14 @@ class _MenuAdminState extends State<MenuAdmin> {
       appBar: AppBar(
         title: Text("3H Mental"),
       ),
-      body: Center(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(ImageRasterPath.backGroundPhoto),
+            fit: BoxFit.fill,
+          ),
+        ),
+        constraints: BoxConstraints.expand(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
@@ -51,7 +60,17 @@ class _MenuAdminState extends State<MenuAdmin> {
               children: <Widget>[
                 const SizedBox(height: 50),
                 Container(
-                    height: 150, child: Image.asset(ImageRasterPath.logo)),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+
+                      image: DecorationImage(
+                        image: AssetImage(ImageRasterPath.logo),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    height: 150,
+                    child: Image.asset(ImageRasterPath.logo)),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -62,6 +81,7 @@ class _MenuAdminState extends State<MenuAdmin> {
                     CardMenu(data: listMenu[4]),
                     CardMenu(data: listMenu[5]),
                     CardMenu(data: listMenu[6]),
+
                   ],
                 ),
                 const SizedBox(height: 50),

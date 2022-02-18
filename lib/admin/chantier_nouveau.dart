@@ -292,8 +292,8 @@ class _NouveauChantierState extends State<NouveauChantier> {
                         nameController.text,
                         adresseController.text,
                         descriptionController.text,
-                        materiaux.map((e) => e.id.toString()).join("_"),
-                        travaux.map((e) => e.id.toString()).join("_"),
+                        materiaux.map((e) => e.name.toString()).join("___"),
+                        travaux.map((e) => e.name.toString()).join("___"),
                         client?.name);
 
                     if (chantier.isValid()) {
@@ -313,6 +313,7 @@ class _NouveauChantierState extends State<NouveauChantier> {
   }
 
   Future saveNewChantier(Chantier chantier) {
+    print(chantier);
     if (kIsWeb) {
       return APIRest.uploadFileWeb(platformFiles, chantier);
     } else {
