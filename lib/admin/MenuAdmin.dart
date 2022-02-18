@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
@@ -48,63 +47,31 @@ class _MenuAdminState extends State<MenuAdmin> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 50),
-              Container(height: 150, child: Image.asset(ImageRasterPath.logo)),
-              const SizedBox(height: 50),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                const SizedBox(height: 50),
+                Container(height: 150, child: Image.asset(ImageRasterPath.logo)),
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CardMenu(data: listMenu[0]),
-                        CardMenu(data: listMenu[1])
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                    CardMenu(data: listMenu[0]),
+                    CardMenu(data: listMenu[1]),
                         CardMenu(data: listMenu[2]),
-                        CardMenu(data: listMenu[3])
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                        CardMenu(data: listMenu[3]),
+
                         CardMenu(data: listMenu[4]),
                         CardMenu(data: listMenu[5])
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                   ,
                         CardMenu(data: listMenu[6]),
 
-                      ],
-                    ),
+
                   ],
                 ),
-              ),
-             ElevatedButton(
-                  onPressed: () {
-                    print('test me');
-                    FlutterAppBadger.isAppBadgeSupported()
-                        .then((value) {
-                          if(value){
-                            FlutterAppBadger.updateBadgeCount(5);
-                          }
-                    });
 
-
-
-                  },
-                  child: Text('test me'))
-            ],
+                const SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

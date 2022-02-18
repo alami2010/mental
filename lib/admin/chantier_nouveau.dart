@@ -135,53 +135,20 @@ class _NouveauChantierState extends State<NouveauChantier> {
         appBar: AppBar(
           title: Text('Nouveau Chantier'),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Container(
-          padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              FloatingActionButton(
-                onPressed: () {
-                  var chantier = Chantier(
-                      -1,
-                      nameController.text,
-                      adresseController.text,
-                      descriptionController.text,
-                      materiaux.map((e) => e.id.toString()).join("_"),
-                      travaux.map((e) => e.id.toString()).join("_"),
-                      client?.name);
-
-                  if (chantier.isValid()) {
-                    saveNewChantier(chantier)
-                        .then((value) => Navigator.of(context).pop());
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Merci de bien remplir le formulaire"),
-                    ));
-                  }
-                },
-                child: Icon(EvaIcons.save),
-              ),
-            ],
-          ),
-        ),
         body: Padding(
           padding: EdgeInsets.only(left: 15, top: 15, right: 15),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-
               children: <Widget>[
-
             Container(
               height: 50,
               child: Row(
-
                 children: <Widget>[
                   Expanded(flex: 2, child: Text('Client ')),
                   Expanded(
                     flex: 3,
                     child: DropdownButton<Client>(
+                      hint: Text('Choissisez un client'),
                       isExpanded: true,
                       value: client,
                       isDense: true,
@@ -205,24 +172,26 @@ class _NouveauChantierState extends State<NouveauChantier> {
                 ],
               ),
             ),
+                const SizedBox(height: 10),
             TextField(
               controller: nameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Nom Chantier',
               ),
             ),
+                const SizedBox(height: 10),
             TextField(
               controller: adresseController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Adresse Chantier',
               ),
             ),
-
+                const SizedBox(height: 10),
             TextField(
               controller: descriptionController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Description',
               ),
@@ -236,7 +205,7 @@ class _NouveauChantierState extends State<NouveauChantier> {
                     },
                       leading: Icon(EvaIcons.homeOutline),
                       title: Text('Travaux'),
-                      trailing: Icon(EvaIcons.gridOutline),
+                      trailing: Text('Ajouter un travaux',style: TextStyle(backgroundColor: Colors.blue),),
                     ),
                   ),
                   SliverList(
@@ -259,7 +228,7 @@ class _NouveauChantierState extends State<NouveauChantier> {
                       },
                       leading: Icon(EvaIcons.home),
                       title: Text('Materiaux'),
-                      trailing: Icon(EvaIcons.gridOutline),
+                      trailing: Text('Ajouter un materiaux',style: TextStyle(backgroundColor: Colors.blue),),
                     ),
                   ),
                   SliverList(
@@ -283,7 +252,7 @@ class _NouveauChantierState extends State<NouveauChantier> {
                         getFile();                     },
                       leading: Icon(EvaIcons.file),
                       title: Text('Plan'),
-                      trailing: Icon(EvaIcons.gridOutline),
+                      trailing: Text('Ajouter un plan' ,style: TextStyle(backgroundColor: Colors.blue),),
                     ),
                   ),
                   SliverList(
@@ -302,6 +271,30 @@ class _NouveauChantierState extends State<NouveauChantier> {
                         ); // you can add your available item here
                       },
                       childCount: platformFiles.length,
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: ElevatedButton(
+                      child: Text('Enregistrer'),
+                      onPressed: () {
+                        var chantier = Chantier(
+                            -1,
+                            nameController.text,
+                            adresseController.text,
+                            descriptionController.text,
+                            materiaux.map((e) => e.id.toString()).join("_"),
+                            travaux.map((e) => e.id.toString()).join("_"),
+                            client?.name);
+
+                        if (chantier.isValid()) {
+                          saveNewChantier(chantier)
+                              .then((value) => Navigator.of(context).pop());
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text("Merci de bien remplir le formulaire"),
+                          ));
+                        }
+                      },
                     ),
                   ),
                 ]))

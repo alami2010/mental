@@ -36,7 +36,7 @@ class CardMenu extends StatelessWidget {
         child: Card(
           child: SizedBox(
               height: size.height * .1,
-              width: size.width * .39,
+              width: size.width * .80,
               child: Center(
                   child: ListTile(
                 onTap: () => {
