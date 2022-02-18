@@ -28,6 +28,8 @@ class ImageRasterPath {
   static const _folderPath = "assets/images/raster";
   static const logo = "$_folderPath/logo.png";
   static const backGroundPhoto = "$_folderPath/bg.png";
+  static const backGroundPhoto_2 = "$_folderPath/bg2.png";
+  static const icon_travaux = "$_folderPath/i1.png";
 // static const myRaster2 = "$_folderPath/my_raster2.jpg";
 // static const myRaster3 = "$_folderPath/my_raster3.jpeg";
 }

@@ -15,7 +15,14 @@ class _InformationState extends State<Information> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(ImageRasterPath.backGroundPhoto_2),
+            fit: BoxFit.fill,
+          ),
+        ),
+        constraints: BoxConstraints.expand(),
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Center(
@@ -24,22 +31,23 @@ class _InformationState extends State<Information> {
                 children: <Widget>[
                   const SizedBox(height: 50),
                   Container(
-                      height: 150, child: Image.asset(ImageRasterPath.logo)),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                      ),
+                      height: 150,
+                      child: Image.asset(ImageRasterPath.logo)),
                   const SizedBox(height: 50),
-                  Text(
-                    "3H Métal",
-                    style: TextStyle(fontSize: 30),
-                  ),
+                  buildContainerText("3H Métal"),
                   const SizedBox(height: 10),
-                  Text(
+                  buildContainerText(
                     "SASU Capital",
-                    style: TextStyle(fontSize: 30),
+
                   ),
                   const SizedBox(height: 10),
-                  Text(
+                  buildContainerText(
                     "1000 €",
-                    style: TextStyle(fontSize: 30),
-                  ),
+                   ),
                   const SizedBox(height: 40),
                   Card(
                     elevation: 5,
@@ -48,7 +56,7 @@ class _InformationState extends State<Information> {
                         Tools.launchMap(
                             "57 Rue des boutons d'or dd 33370 YVRAC");
                       },
-                      leading: Icon(EvaIcons.pin),
+                      leading: Icon(EvaIcons.pin,color: Colors.green,),
                       title: Text("57 Rue des boutons d'or dd 33370 YVRAC"),
                     ),
                   ),
@@ -58,7 +66,7 @@ class _InformationState extends State<Information> {
                       onTap: () {
                         Tools.open('https://www.3hmetal.fr');
                       },
-                      leading: Icon(EvaIcons.globe2Outline),
+                      leading: Icon(EvaIcons.globe2Outline,color: Colors.blue,),
                       title: Text('https://www.3hmetal.fr'),
                     ),
                   ),
@@ -68,7 +76,7 @@ class _InformationState extends State<Information> {
                       onTap: () {
                         Tools.open('tel:0625812179');
                       },
-                      leading: Icon(EvaIcons.phone),
+                      leading: Icon(EvaIcons.phone,color: Colors.red,),
                       title: Text('Appeler'),
                     ),
                   ),
@@ -76,6 +84,22 @@ class _InformationState extends State<Information> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Container buildContainerText(String text) {
+    return Container(
+      width: 300,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.white,
+      ),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 30),
         ),
       ),
     );

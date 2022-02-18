@@ -13,14 +13,6 @@ import 'package:mental/shared/api_rest.dart';
 class MenuAdmin extends StatefulWidget {
   const MenuAdmin({Key? key}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   @override
   State<MenuAdmin> createState() => _MenuAdminState();
@@ -63,11 +55,6 @@ class _MenuAdminState extends State<MenuAdmin> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
-
-                      image: DecorationImage(
-                        image: AssetImage(ImageRasterPath.logo),
-                        fit: BoxFit.fill,
-                      ),
                     ),
                     height: 150,
                     child: Image.asset(ImageRasterPath.logo)),
@@ -81,7 +68,6 @@ class _MenuAdminState extends State<MenuAdmin> {
                     CardMenu(data: listMenu[4]),
                     CardMenu(data: listMenu[5]),
                     CardMenu(data: listMenu[6]),
-
                   ],
                 ),
                 const SizedBox(height: 50),

@@ -63,7 +63,7 @@ class HomePageState extends State<HomePage> {
         if ("ADMIN" == userType) {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => MenuAdmin()));
-        } else if ("ADMIN" == userType) {
+        } else if ("USER" == userType) {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => UserMenu()));
         }
