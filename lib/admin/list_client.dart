@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:mental/model/client.dart';
 import 'package:mental/shared/api_rest.dart';
 
-
-
 class ListClient extends StatefulWidget {
   const ListClient() : super();
 
@@ -36,12 +34,11 @@ class _ListClientState extends State<ListClient> {
     });
   }
 
-  void removeClient( int id) {
+  void removeClient(int id) {
     setState(() {
       APIRest.deleteClient(id).then((response) {
         setState(() {
-           clients = clients.where((element) => element.id != id).toList();
-
+          clients = clients.where((element) => element.id != id).toList();
         });
       });
     });
@@ -115,7 +112,7 @@ class _ListClientState extends State<ListClient> {
               },
             ),
             ...clients.map(
-                  (e) => Card(
+              (e) => Card(
                 elevation: 5,
                 child: ListTile(
                   leading: e.professional
@@ -131,8 +128,7 @@ class _ListClientState extends State<ListClient> {
                 ),
               ),
             ),
-
-           ]),
+          ]),
         ));
   }
 
@@ -142,7 +138,6 @@ class _ListClientState extends State<ListClient> {
       child: Text("Sortir"),
       onPressed: () {
         Navigator.of(context).pop(); // dismiss dialog
-
       },
     );
     Widget continueButton = TextButton(

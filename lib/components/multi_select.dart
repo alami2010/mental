@@ -10,8 +10,7 @@ class MultiSelect extends StatefulWidget {
   final List<Data> selectedItems;
   String title = "";
 
-
-   MultiSelect(
+  MultiSelect(
       {Key? key,
       required this.items,
       required this.selectedItems,
@@ -48,8 +47,8 @@ class _MultiSelectState extends State<MultiSelect> {
 
   @override
   Widget build(BuildContext context) {
-     return AlertDialog(
-      title:   Text(widget.title ),
+    return AlertDialog(
+      title: Text(widget.title),
       content: SingleChildScrollView(
         child: ListBody(
           children: widget.items

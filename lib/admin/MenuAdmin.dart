@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:mental/components/list_task_assigned.dart';
 import 'package:mental/components/menu_drawer.dart';
 import 'package:mental/constants/constants.dart';
@@ -51,24 +50,20 @@ class _MenuAdminState extends State<MenuAdmin> {
             child: Column(
               children: <Widget>[
                 const SizedBox(height: 50),
-                Container(height: 150, child: Image.asset(ImageRasterPath.logo)),
+                Container(
+                    height: 150, child: Image.asset(ImageRasterPath.logo)),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CardMenu(data: listMenu[0]),
                     CardMenu(data: listMenu[1]),
-                        CardMenu(data: listMenu[2]),
-                        CardMenu(data: listMenu[3]),
-
-                        CardMenu(data: listMenu[4]),
-                        CardMenu(data: listMenu[5])
-                   ,
-                        CardMenu(data: listMenu[6]),
-
-
+                    CardMenu(data: listMenu[2]),
+                    CardMenu(data: listMenu[3]),
+                    CardMenu(data: listMenu[4]),
+                    CardMenu(data: listMenu[5]),
+                    CardMenu(data: listMenu[6]),
                   ],
                 ),
-
                 const SizedBox(height: 50),
               ],
             ),
@@ -87,5 +82,4 @@ class _MenuAdminState extends State<MenuAdmin> {
       });
     });
   }
-
- }
+}

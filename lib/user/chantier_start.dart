@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:mental/admin/chantier_action_admin.dart';
 import 'package:mental/model/chantier_view.dart';
 import 'package:mental/shared/api_rest.dart';
 
@@ -56,7 +55,7 @@ class _ChantierStartState extends State<ChantierStart> {
                       }),
                       leading: Icon(EvaIcons.layers),
                       title: Text(e.name),
-                      trailing:e.getStatusIcon(),
+                      trailing: e.getStatusIcon(),
                     ),
                   ),
                 )),

@@ -45,7 +45,8 @@ class _InformationState extends State<Information> {
                     elevation: 5,
                     child: ListTile(
                       onTap: () {
-                        Tools.launchMap("57 Rue des boutons d'or dd 33370 YVRAC");
+                        Tools.launchMap(
+                            "57 Rue des boutons d'or dd 33370 YVRAC");
                       },
                       leading: Icon(EvaIcons.pin),
                       title: Text("57 Rue des boutons d'or dd 33370 YVRAC"),

@@ -49,11 +49,9 @@ class _MateriauxManquantState extends State<MateriauxManquant> {
 
   _saveQte(int id, int qte) {
     APIRest.saveQte(id, qte).then((response) {
-      Tools.showMessage(context,"Quantité bien enregistré");
+      Tools.showMessage(context, "Quantité bien enregistré");
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {

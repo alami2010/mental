@@ -31,8 +31,8 @@ class _ChantierDoneState extends State<ChantierDone> {
       setState(() {
         Iterable list = json.decode(response.body);
         chantiers = list.map((model) => ChantierView.fromJson(model)).toList();
-        chantiersFiltred = chantiers ;
-        allClients =  chantiers.map((e) => e.client).toSet().toList();
+        chantiersFiltred = chantiers;
+        allClients = chantiers.map((e) => e.client).toSet().toList();
       });
     });
   }
@@ -65,7 +65,9 @@ class _ChantierDoneState extends State<ChantierDone> {
                           setState(() {
                             client = newValue!;
 
-                            chantiersFiltred = chantiers.where((element) => element.client == newValue).toList();
+                            chantiersFiltred = chantiers
+                                .where((element) => element.client == newValue)
+                                .toList();
                           });
                         },
                         items: allClients

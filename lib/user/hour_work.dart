@@ -45,15 +45,15 @@ class _HourWorkUserState extends State<HourWorkUser> {
       var horaire = Horaire.fromJson(json.decode(value.body));
       print(horaire);
       setState(() {
-
         final Event event = Event(
-          title: 'Chantier '+widget.chantier.name,
+          title: 'Chantier ' + widget.chantier.name,
           description: buildHours(horaire),
           location: widget.chantier.adresse,
           startDate: DateTime.now(),
           endDate: DateTime.now().add(Duration(hours: 1)),
           iosParams: const IOSParams(
-            reminder: Duration(/* Ex. hours:1 */), // on iOS, you can set alarm notification after your event.
+            reminder: Duration(
+                /* Ex. hours:1 */), // on iOS, you can set alarm notification after your event.
           ),
           androidParams: const AndroidParams(
             emailInvites: [], // on Android, you can add invite emails to your event.
@@ -128,8 +128,8 @@ class _HourWorkUserState extends State<HourWorkUser> {
                   children: [
                     Expanded(
                         flex: 2, // 20%
-                        child: buildDatePickerTime('Debut matin', dateDebutMatin,
-                            (newDate) {
+                        child: buildDatePickerTime(
+                            'Debut matin', dateDebutMatin, (newDate) {
                           print(newDate);
                           setState(() => dateDebutMatin = newDate);
                         })),

@@ -6,7 +6,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:mental/model/chantier.dart';
-import 'package:mental/shared/tools.dart';
 
 import '../components/multi_select.dart';
 import '../model/client.dart';
@@ -65,7 +64,6 @@ class _NouveauChantierState extends State<NouveauChantier> {
     getData();
   }
 
-
   Future<void> getMateriaux(BuildContext context) async {
     final List<Data>? results = await showDialog(
       context: context,
@@ -106,17 +104,17 @@ class _NouveauChantierState extends State<NouveauChantier> {
     }
   }
 
-
   Future getFile() async {
     FilePickerResult? result =
-    await FilePicker.platform.pickFiles(allowMultiple: true);
+        await FilePicker.platform.pickFiles(allowMultiple: true);
 
     if (result != null) {
       setState(() {
         platformFiles.addAll(result.files);
       });
 
-      if (kIsWeb) {} else {
+      if (kIsWeb) {
+      } else {
         setState(() {
           files = result.paths.map((path) => io.File(path!)).toList();
           print(files);
@@ -137,9 +135,9 @@ class _NouveauChantierState extends State<NouveauChantier> {
         ),
         body: Padding(
           padding: EdgeInsets.only(left: 15, top: 15, right: 15),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <
+                  Widget>[
             Container(
               height: 50,
               child: Row(
@@ -153,7 +151,7 @@ class _NouveauChantierState extends State<NouveauChantier> {
                       value: client,
                       isDense: true,
                       elevation: 16,
-                      icon: Icon(EvaIcons.gridOutline) ,
+                      icon: Icon(EvaIcons.gridOutline),
                       style: const TextStyle(color: Colors.black),
                       onChanged: (Client? newValue) {
                         setState(() {
@@ -164,7 +162,10 @@ class _NouveauChantierState extends State<NouveauChantier> {
                           .map<DropdownMenuItem<Client>>((Client value) {
                         return DropdownMenuItem<Client>(
                           value: value,
-                          child: Text(value.name,style: TextStyle(fontSize:20),),
+                          child: Text(
+                            value.name,
+                            style: TextStyle(fontSize: 20),
+                          ),
                         );
                       }).toList(),
                     ),
@@ -172,7 +173,7 @@ class _NouveauChantierState extends State<NouveauChantier> {
                 ],
               ),
             ),
-                const SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: nameController,
               decoration: const InputDecoration(
@@ -180,7 +181,7 @@ class _NouveauChantierState extends State<NouveauChantier> {
                 labelText: 'Nom Chantier',
               ),
             ),
-                const SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: adresseController,
               decoration: const InputDecoration(
@@ -188,7 +189,7 @@ class _NouveauChantierState extends State<NouveauChantier> {
                 labelText: 'Adresse Chantier',
               ),
             ),
-                const SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: descriptionController,
               decoration: const InputDecoration(
@@ -198,106 +199,115 @@ class _NouveauChantierState extends State<NouveauChantier> {
             ),
             Expanded(
                 child: CustomScrollView(slivers: <Widget>[
-                  SliverToBoxAdapter(
-                    child: ListTile(
-                      onTap: () {
-                      getTravaux(context);
-                    },
-                      leading: Icon(EvaIcons.homeOutline),
-                      title: Text('Travaux'),
-                      trailing: Text('Ajouter un travaux',style: TextStyle(backgroundColor: Colors.blue),),
-                    ),
+              SliverToBoxAdapter(
+                child: ListTile(
+                  onTap: () {
+                    getTravaux(context);
+                  },
+                  leading: Icon(EvaIcons.homeOutline),
+                  title: Text('Travaux'),
+                  trailing: Text(
+                    'Ajouter un travaux',
+                    style: TextStyle(backgroundColor: Colors.blue),
                   ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        final item = travaux[index];
-                        return Container(
-                          decoration:
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    final item = travaux[index];
+                    return Container(
+                      decoration:
                           BoxDecoration(color: Colors.grey.withOpacity(0.8)),
-                          child: ListTile(title: Text(item.name)),
-                        ); // you can add your available item here
-                      },
-                      childCount: travaux.length,
-                    ),
+                      child: ListTile(title: Text(item.name)),
+                    ); // you can add your available item here
+                  },
+                  childCount: travaux.length,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: ListTile(
+                  onTap: () {
+                    getMateriaux(context);
+                  },
+                  leading: Icon(EvaIcons.home),
+                  title: Text('Materiaux'),
+                  trailing: Text(
+                    'Ajouter un materiaux',
+                    style: TextStyle(backgroundColor: Colors.blue),
                   ),
-                   SliverToBoxAdapter(
-                    child: ListTile(
-                      onTap: () {
-                        getMateriaux(context);
-                      },
-                      leading: Icon(EvaIcons.home),
-                      title: Text('Materiaux'),
-                      trailing: Text('Ajouter un materiaux',style: TextStyle(backgroundColor: Colors.blue),),
-                    ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        final item = materiaux[index];
-                        if (index > materiaux.length) return null;
-                        return Container(
-                          margin: const EdgeInsets.all(2.0),
-                          decoration:
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    final item = materiaux[index];
+                    if (index > materiaux.length) return null;
+                    return Container(
+                      margin: const EdgeInsets.all(2.0),
+                      decoration:
                           BoxDecoration(color: Colors.grey.withOpacity(0.8)),
-                          child: ListTile(title: Text(item.name)),
-                        ); // you can add your available item here
-                      },
-                      childCount: materiaux.length,
-                    ),
+                      child: ListTile(title: Text(item.name)),
+                    ); // you can add your available item here
+                  },
+                  childCount: materiaux.length,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: ListTile(
+                  onTap: () {
+                    getFile();
+                  },
+                  leading: Icon(EvaIcons.file),
+                  title: Text('Plan'),
+                  trailing: Text(
+                    'Ajouter un plan',
+                    style: TextStyle(backgroundColor: Colors.blue),
                   ),
-                   SliverToBoxAdapter(
-                    child: ListTile(
-                      onTap: () {
-                        getFile();                     },
-                      leading: Icon(EvaIcons.file),
-                      title: Text('Plan'),
-                      trailing: Text('Ajouter un plan' ,style: TextStyle(backgroundColor: Colors.blue),),
-                    ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        final item = platformFiles[index];
-                        if (index > platformFiles.length) return null;
-                        return Container(
-                          margin: const EdgeInsets.all(2.0),
-                          decoration:
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    final item = platformFiles[index];
+                    if (index > platformFiles.length) return null;
+                    return Container(
+                      margin: const EdgeInsets.all(2.0),
+                      decoration:
                           BoxDecoration(color: Colors.grey.withOpacity(0.8)),
-                          child: ListTile(
-                            title: Text(item.name)
-                            ,
-                          ),
-                        ); // you can add your available item here
-                      },
-                      childCount: platformFiles.length,
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: ElevatedButton(
-                      child: Text('Enregistrer'),
-                      onPressed: () {
-                        var chantier = Chantier(
-                            -1,
-                            nameController.text,
-                            adresseController.text,
-                            descriptionController.text,
-                            materiaux.map((e) => e.id.toString()).join("_"),
-                            travaux.map((e) => e.id.toString()).join("_"),
-                            client?.name);
+                      child: ListTile(
+                        title: Text(item.name),
+                      ),
+                    ); // you can add your available item here
+                  },
+                  childCount: platformFiles.length,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: ElevatedButton(
+                  child: Text('Enregistrer'),
+                  onPressed: () {
+                    var chantier = Chantier(
+                        -1,
+                        nameController.text,
+                        adresseController.text,
+                        descriptionController.text,
+                        materiaux.map((e) => e.id.toString()).join("_"),
+                        travaux.map((e) => e.id.toString()).join("_"),
+                        client?.name);
 
-                        if (chantier.isValid()) {
-                          saveNewChantier(chantier)
-                              .then((value) => Navigator.of(context).pop());
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                            content: Text("Merci de bien remplir le formulaire"),
-                          ));
-                        }
-                      },
-                    ),
-                  ),
-                ]))
+                    if (chantier.isValid()) {
+                      saveNewChantier(chantier)
+                          .then((value) => Navigator.of(context).pop());
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Merci de bien remplir le formulaire"),
+                      ));
+                    }
+                  },
+                ),
+              ),
+            ]))
           ]),
         ));
   }
@@ -309,5 +319,4 @@ class _NouveauChantierState extends State<NouveauChantier> {
       return APIRest.uploadFileMobile(files, chantier);
     }
   }
-
 }

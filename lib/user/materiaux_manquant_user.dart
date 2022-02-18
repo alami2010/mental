@@ -111,7 +111,6 @@ class _MateriauxManquantUserState extends State<MateriauxManquantUser> {
                       ),
                     ),
                   ))
-
             ]),
           ),
         ));

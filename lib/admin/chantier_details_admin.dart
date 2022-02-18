@@ -4,7 +4,6 @@ import 'package:mental/constants/constants.dart';
 import 'package:mental/model/chantier_view.dart';
 import 'package:mental/shared/tools.dart';
 
-
 class ChantierDetailsAdmin extends StatefulWidget {
   final ChantierView chantier;
 

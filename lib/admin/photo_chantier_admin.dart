@@ -1,9 +1,5 @@
 import 'dart:convert';
-import 'dart:io' as io;
 
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mental/model/chantier_view.dart';
 import 'package:mental/model/photo.dart';
@@ -46,8 +42,9 @@ class _PhotoChantierAdminState extends State<PhotoChantierAdmin> {
       ),
       body: ListView.builder(
         itemBuilder: (BuildContext ctx, int index) {
-          print('http://127.0.0.1:8000/files/'+photos[index].url);
-          return Image.network('http://127.0.0.1:8000/files/'+photos[index].url);
+          print('http://127.0.0.1:8000/files/' + photos[index].url);
+          return Image.network(
+              'http://127.0.0.1:8000/files/' + photos[index].url);
         },
         itemCount: photos.length,
       ),

@@ -43,23 +43,23 @@ class _ChantierNewStartState extends State<ChantierNewStart> {
           child: SingleChildScrollView(
             child: Column(children: <Widget>[
               ...chantiers.map((e) => Card(
-                elevation: 5,
-                child: Container(
-                  decoration: BoxDecoration(color: e.getStatusColor()),
-                  child: ListTile(
-                    onTap: () => Navigator.of(context)
-                        .push(MaterialPageRoute(
-                        builder: (context) =>
-                            ChantierActionAdmin(chantier: e)))
-                        .then((value) {
-                      getChantiers();
-                    }),
-                    leading: Icon(EvaIcons.layers),
-                    title: Text(e.name),
-                    trailing:e.getStatusIcon(),
-                  ),
-                ),
-              )),
+                    elevation: 5,
+                    child: Container(
+                      decoration: BoxDecoration(color: e.getStatusColor()),
+                      child: ListTile(
+                        onTap: () => Navigator.of(context)
+                            .push(MaterialPageRoute(
+                                builder: (context) =>
+                                    ChantierActionAdmin(chantier: e)))
+                            .then((value) {
+                          getChantiers();
+                        }),
+                        leading: Icon(EvaIcons.layers),
+                        title: Text(e.name),
+                        trailing: e.getStatusIcon(),
+                      ),
+                    ),
+                  )),
             ]),
           ),
         ));

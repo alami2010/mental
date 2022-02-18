@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mental/constants/constants.dart';
 import 'package:mental/model/chantier_view.dart';
 import 'package:mental/shared/tools.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ChantierDetailsUser extends StatefulWidget {
   final ChantierView chantier;
@@ -116,9 +115,7 @@ class _ChantierDetailsUserState extends State<ChantierDetailsUser> {
                       child: ListTile(
                         title: Text(item.name),
                         onTap: () {
-                          Tools.open(
-                              baseUrlMental+"/files/" +
-                                  item.url);
+                          Tools.open(baseUrlMental + "/files/" + item.url);
                         },
                       ),
                     ); // you can add your available item here
@@ -130,8 +127,4 @@ class _ChantierDetailsUserState extends State<ChantierDetailsUser> {
           ]),
         ));
   }
-
-
-
-
 }

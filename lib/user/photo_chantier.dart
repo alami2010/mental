@@ -33,8 +33,6 @@ class _PhotoChantierState extends State<PhotoChantier> {
     getPhotosChantier(widget.chantier.id);
   }
 
-
-
   Future getFile() async {
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(allowMultiple: true);
@@ -52,10 +50,9 @@ class _PhotoChantierState extends State<PhotoChantier> {
         });
       }
 
-      savePhotoChantier(widget.chantier.id).then((value)  {
-       getPhotosChantier(widget.chantier.id);
+      savePhotoChantier(widget.chantier.id).then((value) {
+        getPhotosChantier(widget.chantier.id);
       });
-
     } else {
       // User canceled the picker
     }
@@ -82,11 +79,10 @@ class _PhotoChantierState extends State<PhotoChantier> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Photo de chantier '+widget.chantier.name),
+          title: Text('Photo de chantier ' + widget.chantier.name),
         ),
         body: SingleChildScrollView(
           child: Column(children: <Widget>[
-
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 minimumSize: Size.fromHeight(
@@ -103,11 +99,10 @@ class _PhotoChantierState extends State<PhotoChantier> {
                 child: ListTile(
                   title: Text(e.name),
                   trailing: ElevatedButton(
-                    child: Icon(EvaIcons.arrowCircleDownOutline, color: Colors.white),
+                    child: Icon(EvaIcons.arrowCircleDownOutline,
+                        color: Colors.white),
                     onPressed: () {
-
                       Tools.open(baseUrlMental + "files/" + e.url);
-
                     },
                   ),
                 ),

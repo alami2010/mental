@@ -33,7 +33,6 @@ class _TravauxSuppState extends State<TravauxSupp> {
     }
     APIRest.saveTravauxSupp(nameController.text, widget.chantier.id)
         .then((value) {
-
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("bien enregistrer"),
       ));

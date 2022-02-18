@@ -23,8 +23,10 @@ class _ChantierProgressAdminState extends State<ChantierProgressAdmin> {
 
   @override
   Widget build(BuildContext context) {
-
-    var moyenne = (widget.chantier.listTravaux.map((e) => e.progress).reduce((a, b) => a + b) / widget.chantier.listTravaux.length);
+    var moyenne = (widget.chantier.listTravaux
+            .map((e) => e.progress)
+            .reduce((a, b) => a + b) /
+        widget.chantier.listTravaux.length);
 
     return Scaffold(
         appBar: AppBar(
@@ -43,8 +45,8 @@ class _ChantierProgressAdminState extends State<ChantierProgressAdmin> {
                           animation: true,
                           lineHeight: 20.0,
                           animationDuration: 2000,
-                          percent: e.progress/100,
-                          center: Text(e.progress.toString()+"%"),
+                          percent: e.progress / 100,
+                          center: Text(e.progress.toString() + "%"),
                           progressColor: Colors.greenAccent,
                         ),
                         ListTile(
@@ -62,21 +64,20 @@ class _ChantierProgressAdminState extends State<ChantierProgressAdmin> {
                 radius: 120.0,
                 lineWidth: 13.0,
                 animation: true,
-                percent: moyenne/100,
+                percent: moyenne / 100,
                 center: new Text(
-                  moyenne.toString()+"%",
-                  style:
-                  new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                  moyenne.toString() + "%",
+                  style: new TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20.0),
                 ),
                 footer: new Text(
                   "Avancement",
-                  style:
-                  new TextStyle(fontWeight: FontWeight.bold, fontSize: 17.0),
+                  style: new TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 17.0),
                 ),
                 circularStrokeCap: CircularStrokeCap.round,
                 progressColor: Colors.blue,
               ),
-
             ]),
           ),
         ));

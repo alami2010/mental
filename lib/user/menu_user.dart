@@ -42,13 +42,13 @@ class _UserMenuState extends State<UserMenu> {
           page: Information()),
       const ListMenuData(
         color: Colors.blueAccent,
-        icon:  Icon(EvaIcons.homeOutline,color: Colors.white),
+        icon: Icon(EvaIcons.homeOutline, color: Colors.white),
         label: "Chantier en cours",
         page: ChantierStart(),
       ),
       const ListMenuData(
         color: Colors.redAccent,
-        icon: Icon(EvaIcons.alertCircle,color: Colors.white),
+        icon: Icon(EvaIcons.alertCircle, color: Colors.white),
         label: "Matérieux manquants",
         page: MateriauxManquantUser(),
       ),

@@ -21,5 +21,4 @@ class _PageEmptyState extends State<PageEmpty> {
           child: Column(children: <Widget>[Text('En cours')]),
         ));
   }
-
- }
+}
